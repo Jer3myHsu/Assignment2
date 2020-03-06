@@ -5,7 +5,9 @@ app = Flask(__name__)
 @app.route('/<string>')
 def generateResponse(string):
 	new = "".join(i for i in string if i.isalpha())
-	if new.islower():
+	if string.isalpha() == False: 
+		final = new
+	elif new.islower():
 		final = new.upper()
 	elif new.isupper():
 		final = new.lower()
