@@ -1,0 +1,21 @@
+.navigation {
+    background-color: royalblue;
+}
+a {
+    transition:
+    background-color 0.2s ease-in-out 0s,
+    color 0.2s ease-in-out 0s
+    ;
+    font-size: 2rem;
+    text-decoration: none;
+    color: white;
+}
+a:hover {
+    background-color: white;
+    color: royalblue;
+}
+  
+a:active {
+    background-color: white;
+    color: lightslategrey;
+}
