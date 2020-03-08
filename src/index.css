@@ -74,7 +74,7 @@ body {
     color: tomato;
 }
 .cell a:hover {
-    color: darkred;
+    color: gold;
 }
 .cell a:active {
     color: darkgray;
@@ -91,7 +91,7 @@ body {
     color: white;
 }
 .button a:hover {
-    background-color: darkred;
+    background-color: gold;
     color: white;
 }
 .button a:active {
