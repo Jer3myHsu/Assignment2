@@ -11,11 +11,8 @@ body {
     align-items: center;
     min-height: 100%;
 }
-.navigation {
-    display: flex;
-    justify-content: center;
-    background-color: #404040;
-    width: 100%;
+#checkbox {
+    display: none;
 }
 .navigation a {
     color: white;
@@ -23,8 +20,6 @@ body {
         background-color 0.3s ease-in-out 0s,
         color 0.3s ease-in-out 0s;
     background: none;
-    font-size: 18pt;
-    padding: 8px 20px;
     text-decoration: none;
 }
 .navigation a:hover {
@@ -34,6 +29,45 @@ body {
 .navigation a:active {
     background-color: white;
     color: black;
+}
+@media (min-width: 0px) {
+    .navigation {
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        background-color: #555555;
+        width: 100%;
+    }
+    .navigation a {
+        font-size: 14pt;
+        padding: 5px 15px;
+    }
+    .menu {
+        cursor: pointer;
+        align-self: stretch;
+        background-color: #404040;
+        padding: 10px;
+    }
+    #checkbox:checked + .navigation {
+        display: flex;
+    }
+}
+@media (min-width: 1200px) {
+    .navigation {
+        display: flex;
+        visibility: visible;
+        flex-direction: row;
+        justify-content: center;
+        background-color: #404040;
+        width: 100%;
+    }
+    .navigation a {
+        font-size: 18pt;
+        padding: 8px 20px;
+    }
+    .menu {
+        display: none;
+    }
 }
 .title {
     display: flex;
