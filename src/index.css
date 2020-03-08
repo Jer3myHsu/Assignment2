@@ -66,37 +66,18 @@ body {
     padding: 3px 0px;
 }
 /*Table*/
-.cell a {
+a {
     transition: 
         text-decoration 0.3s ease-in-out 0s,
         color 0.3s ease-in-out 0s;
     text-decoration: none;
     color: tomato;
 }
-.cell a:hover {
+a:hover {
     color: gold;
 }
-.cell a:active {
+a:active {
     color: darkgray;
-}
-.button a {
-    transition:
-        background-color 0.3s ease-in-out 0s,
-        color 0.3s ease-in-out 0s;
-    font-size: 14pt;
-    padding: 5px;
-    border-radius: 5px;
-    background-color: tomato;
-    text-decoration: none;
-    color: white;
-}
-.button a:hover {
-    background-color: gold;
-    color: white;
-}
-.button a:active {
-    background-color: darkgray;
-    color: white;
 }
 .footer {
     text-align: center;
