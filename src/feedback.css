@@ -12,12 +12,14 @@ body {
     min-height: 100%;
 }
 .content {
+    margin: 15px;
     max-width: 1200px;
 }
 #checkbox {
     display: none;
 }
-.navigation a {
+#menu a {
+    display: block;
     color: white;
     transition:
         background-color 0.3s ease-in-out 0s,
@@ -25,38 +27,45 @@ body {
     background: none;
     text-decoration: none;
 }
-.navigation a:hover {
+#menu a:hover {
     background-color: lightskyblue;
     color: black;
 }
-.navigation a:active {
+#menu a:active {
     background-color: white;
     color: black;
 }
+#menu li {
+    list-style-type: none;
+}
+#menu {
+    padding: 0px;
+    margin: 0px;
+}
 @media (min-width: 0px) {
-    .navigation {
+    #menu {
         display: none;
         flex-direction: column;
-        justify-content: center;
         background-color: #555555;
         width: 100%;
     }
-    .navigation a {
+    #menu a {
+        align-self: stretch;
         font-size: 14pt;
         padding: 5px 15px;
     }
-    .menu {
+    #menuButton {
         cursor: pointer;
         align-self: stretch;
         background-color: #404040;
         padding: 10px;
     }
-    #checkbox:checked + .navigation {
+    #checkbox:checked + #menu {
         display: flex;
     }
 }
 @media (min-width: 1200px) {
-    .navigation {
+    #menu {
         display: flex;
         visibility: visible;
         flex-direction: row;
@@ -64,26 +73,25 @@ body {
         background-color: #404040;
         width: 100%;
     }
-    .navigation a {
+    #menu a {
         font-size: 18pt;
         padding: 8px 20px;
     }
-    .menu {
+    #menuButton {
         display: none;
     }
 }
-.title {
+h1 {
     display: flex;
     justify-content: center;
     font-weight: bold;
-    margin: 20px;
     font-size: 24pt;
 }
-.subtitle {
+h2 {
     font-size: 20pt;
     border-bottom: 2px lightskyblue solid;
 }
-.description p {
+.description {
     font-size: 14pt;
 }
 .text {
@@ -121,20 +129,20 @@ input {
     font-size: 14pt;
     min-width: 800px;
 }
-.footer {
+footer {
     text-align: center;
     color: gray;
     padding: 10px;
     margin-top: auto;
 }
-.footer a {
+footer a {
     transition: color 0.3s ease-in-out 0s;
     text-decoration: none;
     color: gray;
 }
-.footer a:hover {
+footer a:hover {
     color: darkgray;
 }
-.footer a:active {
+footer a:active {
     color: white;
 }

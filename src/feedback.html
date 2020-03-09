@@ -7,41 +7,44 @@
 	<title>CSCB20: Feedback</title>
 </head>
 <body>
-<label class="menu" for="checkbox"><img src="images/menu.svg" alt="Menu"></label>
-<input type="checkbox" id="checkbox"></input>
-<div class="navigation">
-    <a href="index.html">Home</a>
-    <a href="team.html">Course Team</a>
-    <a href="calendar.html">Calendar</a>
-    <a href="lectures.html">Lectures</a>
-    <a href="labs.html">Labs</a>
-    <a href="https://piazza.com/mail.utoronto.ca/">Piazza</a>
-    <a href="https://markus.utsc.utoronto.ca/cscb20w20">Markus</a>
-    <a href="resources.html">Resources</a>
-    <a href="feedback.html">Feedback</a>
+<div id="navigation"></div>
+    <label id="menuButton" for="checkbox"><img src="images/menu.svg" alt="Menu"></label>
+    <input type="checkbox" id="checkbox"></input>
+    <ul id="menu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="team.html">Course Team</a></li>
+        <li><a href="calendar.html">Calendar</a></li>
+        <li><a href="lectures.html">Lectures</a></li>
+        <li><a href="labs.html">Labs</a></li>
+        <li><a href="https://piazza.com/mail.utoronto.ca/">Piazza</a></li>
+        <li><a href="https://markus.utsc.utoronto.ca/cscb20w20">Markus</a></li>
+        <li><a href="resources.html">Resources</a></li>
+        <li><a href="feedback.html">Feedback</a></li>
+    </ul>
 </div>
-<div class="title">Anonymous Feedback</div>
 <div class="content">
-    <div class="description">
-        <p>
-            On this page, you can submit any feedback or comments about the website, course, and/or Instructors. You may
-            include your email if would like a response back.
-        </p>
-    </div>
-    <div class="subtitle">Feedback</div>
+    <h1>Anonymous Feedback</h1>
+    <p class="description">
+        On this page, you can submit any feedback or comments about the website, course, and/or Instructors. You may
+        include your email if would like a response back.
+    </p>
+    <h2>Feedback</h2>
     <div class="text">
         <textarea class="form-element" cols="90" rows="10" placeholder="Comment/Feedback"></textarea>
         <input type="form-element" type="text" placeholder="Email (Optional)">
-        
     </div>
     <button>Submit</button>
 </div>
-<div class="footer">
+<footer>
     <a href="https://www.utsc.utoronto.ca/cms/faculty-of-computer-science">
         Faculty of Computer Science at U of T
     </a>
     <br>
     Site design by Chi Jian Hsu & Philip Kattathara
-</div>
+</footer>
+<!-- This <script> is to prevent transition effect from occuring on load up
+    Find out more here
+    https://stackoverflow.com/questions/14389566/stop-css-transition-from-firing-on-page-load -->
+<script> </script>
 </body>
 </html>
