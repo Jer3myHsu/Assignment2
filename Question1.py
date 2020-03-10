@@ -1,7 +1,16 @@
-from flask import FLASK
+from flask import Flask
 
 app = Flask(__name__)
 
+@app.route('/')
+def welcome():
+	return '''<html>
+    	<head>
+    	</head>
+    	<body>
+    	<b>Welcome, to my CSCB20 website!</b>
+    	</body>
+    	</html>'''
 @app.route('/<string>')
 def generateResponse(string):
 	new = "".join(i for i in string if i.isalpha())
