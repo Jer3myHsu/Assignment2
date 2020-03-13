@@ -31,7 +31,7 @@ body {
     background-color: lightskyblue;
     color: black;
 }
-#menu a:active, #current:active {
+#menu a:active {
     background-color: white;
     color: black;
 }

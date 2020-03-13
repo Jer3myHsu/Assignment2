@@ -64,6 +64,26 @@ body {
         display: flex;
     }
 }
+@media (min-width: 1100px) {
+    #menu {
+        display: flex;
+        visibility: visible;
+        flex-direction: row;
+        justify-content: center;
+        background-color: #404040;
+        width: 100%;
+    }
+    #menu a {
+        font-size: 14pt;
+        padding: 8px 20px;
+    }
+    #menuButton {
+        display: none;
+    }
+    .table {
+        min-width: 1000px;
+    }
+}
 @media (min-width: 1200px) {
     #menu {
         display: flex;
@@ -74,11 +94,14 @@ body {
         width: 100%;
     }
     #menu a {
-        font-size: 18pt;
+        font-size: 16pt;
         padding: 8px 20px;
     }
     #menuButton {
         display: none;
+    }
+    .table {
+        min-width: 1000px;
     }
 }
 h1 {
