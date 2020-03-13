@@ -80,6 +80,9 @@ body {
     #menuButton {
         display: none;
     }
+    .table {
+        min-width: 1000px;
+    }
 }
 h1 {
     display: flex;
@@ -99,7 +102,6 @@ h2 {
 .table {
     font-size: 14pt;
     width: 100%;
-    min-width: 1000px;
     display: table;
 }
 .heading {
