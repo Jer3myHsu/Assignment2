@@ -63,6 +63,12 @@ body {
     #checkbox:checked + #menu {
         display: flex;
     }
+    .table {
+        display: none;
+    }
+    .mobileTable {
+        display: table;
+    }
 }
 @media (min-width: 1100px) {
     #menu {
@@ -81,7 +87,11 @@ body {
         display: none;
     }
     .table {
+        display: table;
         min-width: 1000px;
+    }
+    .mobileTable {
+        display: none;
     }
 }
 @media (min-width: 1200px) {
@@ -101,7 +111,11 @@ body {
         display: none;
     }
     .table {
+        display: table;
         min-width: 1000px;
+    }
+    .mobileTable {
+        display: none;
     }
 }
 h1 {
@@ -113,10 +127,15 @@ h1 {
 .description {
     font-size: 14pt;
 }
+hr {
+    border-top: 2px lightskyblue solid;
+}
 /*Table*/
-.table {
+.table, .mobileTable, .tableStay {
     font-size: 14pt;
     width: 100%;
+}
+.tableStay {
     display: table;
 }
 .heading {
