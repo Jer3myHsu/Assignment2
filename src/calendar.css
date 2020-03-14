@@ -80,9 +80,6 @@ body {
     #menuButton {
         display: none;
     }
-    .table {
-        min-width: 1000px;
-    }
 }
 @media (min-width: 1200px) {
     #menu {
@@ -99,9 +96,6 @@ body {
     }
     #menuButton {
         display: none;
-    }
-    .table {
-        min-width: 1000px;
     }
 }
 h1 {
