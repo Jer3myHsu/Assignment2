@@ -1,1 +1,0 @@
-As a student user, the student must be able to see the course instructor’s as well as TA’s contact information when clicking on the “Course Team” button

@@ -1,1 +1,0 @@
-As a student user, the student must be able to see all the Office Hours as well as important dates (such as the midterm) on Google Calendar when clicking on the “Calendar” button

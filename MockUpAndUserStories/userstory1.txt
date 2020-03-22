@@ -1,1 +1,0 @@
-As a student user, the student must be able to see general information about the course (such as description, instructor, syllabus) when clicking on the “Home” button or once entering the site
