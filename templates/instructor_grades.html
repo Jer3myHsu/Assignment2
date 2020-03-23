@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/team.css"/>
+    <link rel="icon" href="static/images/favicon.png">
+    <title>CSCB20: Grades [Instructor]</title>
+</head>
+<body>
+<div id="navigation"></div>
+    <label id="menuButton" for="checkbox"><img src="static/images/menu.svg" alt="Menu"></label>
+    <input type="checkbox" id="checkbox"></input>
+    <ul id="menu">
+        <li><a href="index">Home</a></li>
+        <li><a href="team">Course Team</a></li>
+        <li><a href="calendar">Calendar</a></li>
+        <li><a href="lectures">Lectures</a></li>
+        <li><a href="labs">Labs</a></li>
+        <li><a href="assignment">Assignments</a></li>
+        <li><a href="https://piazza.com/mail.utoronto.ca/">Piazza</a></li>
+        <li><a href="https://markus.utsc.utoronto.ca/cscb20w20">Markus</a></li>
+        <li><a href="resources">Resources</a></li>
+        <li><a href="feedback">Feedback</a></li>
+    </ul>
+</div>
+<div class="content">
+    <h1>Grades</h1>
+    <div class="table">
+        <div class="heading">
+            <div class="cell">Student Id</div>
+            <div class="cell">Assignment</div>
+            <div class="cell">Grade</div>
+        </div>
+        {% for item in grade %}
+        <div class="row">
+            <div class="cell">{{ item['sid'] }}</div>
+            <div class="cell">{{ item['assignment'] }}</div>
+            <div class="cell">{{ item['grade'] }}</div>
+        </div>
+        {% endfor %}
+        </div>    
+    <div class="mobileTable">
+        <div class="heading">
+            <div class="cell">Student Id</div>
+            <div class="cell">Assignment</div>
+            <div class="cell">Grade</div>
+        </div>
+        {% for item in grade %}
+        <div class="row">
+            <div class="cell">{{ item['sid'] }}</div>
+            <div class="cell">{{ item['assignment'] }}</div>
+            <div class="cell">{{ item['grade'] }}</div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<footer>
+    <a href="https://www.utsc.utoronto.ca/cms/faculty-of-computer-science">
+        Faculty of Computer Science at U of T
+    </a>
+    <br>
+    Site design by Chi Jian Hsu & Philip Kattathara
+</footer>
+<!-- This <script> is to prevent transition effect from occuring on load up
+    Find out more here
+    https://stackoverflow.com/questions/14389566/stop-css-transition-from-firing-on-page-load -->
+<script> </script>
+</body>
+</html>
