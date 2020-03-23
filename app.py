@@ -2,7 +2,7 @@ import sqlite3
 from flask import Flask, render_template, request, g
 
 app = Flask(__name__)
-DATABASE = "./database.db"
+DATABASE = "./assignment3.db"
 
 # https://flask.palletsprojects.com/en/1.1.x/patterns/sqlite3/
 def get_db():
