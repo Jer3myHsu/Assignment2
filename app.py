@@ -66,5 +66,9 @@ def team_page():
     db.close()
     return render_template('team.html', instructor=instructors)
 
+@app.route('/login')
+def login_page():
+    return render_template('login.html')
+
 if __name__ == '__main__':
     app.run(debug=True)
