@@ -31,55 +31,15 @@
             <div class="cell">Name</div>
             <div class="cell">Email</div>
         </div>
+        {% for item in instructor %}
         <div class="row">
-            <div class="cell">Instructor</div>
-            <div class="cell">Dr. Anna Bretscher</div>
+            <div class="cell">{{ item['role'] }}</div>
+            <div class="cell">{{ item['name'] }}</div>
             <div class="cell">
-                <a href="mailto:bretscher@utsc.utoronto.ca">bretscher@utsc.utoronto.ca</a>
+                <a href="mailto:{{ item['email'] }}">{{ item['email'] }}</a>
             </div>
         </div>
-        <div class="row">
-            <div class="cell">Teaching Assistant</div>
-            <div class="cell">Vidya Ananda</div>
-            <div class="cell">
-                <a href="mailto:vidya.ananda@utsc.utoronto.ca">vidya.ananda@utsc.utoronto.ca</a>
-            </div>
-        </div>
-        <div class="row">
-            <div class="cell">Teaching Assistant</div>
-            <div class="cell">Sakina Gadriwala</div>
-            <div class="cell">
-                <a href="">mail@utsc.utoronto.ca</a>
-            </div>
-        </div>
-        <div class="row">
-            <div class="cell">Teaching Assistant</div>
-            <div class="cell">Brian Lam</div>
-            <div class="cell">
-                <a href="">mail@utsc.utoronto.ca</a>
-            </div>
-        </div>
-        <div class="row">
-            <div class="cell">Teaching Assistant</div>
-            <div class="cell">Frederic Pun</div>
-            <div class="cell">
-                <a href="mailto:frederic.pun@mail.utoronto.ca">frederic.pun@mail.utoronto.ca</a>
-            </div>
-        </div>
-        <div class="row">
-            <div class="cell">Teaching Assistant</div>
-            <div class="cell">Dharmik Shah</div>
-            <div class="cell">
-                <a href="">mail@utsc.utoronto.ca</a>
-            </div>
-        </div>
-        <div class="row">
-            <div class="cell">Teaching Assistant</div>
-            <div class="cell">Kevin Zhang</div>
-            <div class="cell">
-                <a href="">mail@utsc.utoronto.ca</a>
-            </div>
-        </div>
+        {% endfor %}
     </div>    <div class="mobileTable">
         <div class="heading">
             <div class="cell">Contact</div>

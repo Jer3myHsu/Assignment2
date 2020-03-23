@@ -58,7 +58,13 @@ def resources_page():
 
 @app.route('/team')
 def team_page():
-    return render_template('team.html')
+    db = get_db()
+    db.row_factory = make_dicts
+    instructors = []
+    for instructor in query_db('select * from Instructors'):
+        instructors.append(instructor)
+    db.close()
+    return render_template('team.html', instructor=instructors)
 
 if __name__ == '__main__':
     app.run(debug=True)
