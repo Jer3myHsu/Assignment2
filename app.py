@@ -56,6 +56,16 @@ def lectures_page():
 def resources_page():
     return render_template('resources.html')
 
+@app.route('/instructor_grades')
+def instructor_grades_page():
+    db = get_db()
+    db.row_factory = make_dicts
+    grades = []
+    for grade in query_db('select * from Grades'):
+        grades.append(grade)
+    db.close()
+    return render_template('instructor_grades.html', grade=grades)
+
 @app.route('/team')
 def team_page():
     db = get_db()
