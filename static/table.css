@@ -1,0 +1,26 @@
+@import url("main.css");
+
+.table, .mobileTable, .tableStay {
+    font-size: 14pt;
+    width: 100%;
+}
+.tableStay {
+    display: table;
+}
+.heading {
+    display: table-row;
+    font-weight: bold;
+    background: royalblue;
+    color: white;
+}
+.row {
+    display: table-row;
+    background-color: #EDF5F9;
+}
+.row:nth-child(even) {
+    background: white;
+}
+.cell {
+    display: table-cell;
+    padding: 5px;
+}

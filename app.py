@@ -28,7 +28,6 @@ def close_connection(exception):
         db.close()
 
 @app.route('/')
-@app.route('/index')
 def root():
     return render_template('index.html')
 
