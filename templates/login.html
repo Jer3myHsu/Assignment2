@@ -10,10 +10,19 @@
 <div class="content">
     <img src="static/images/utsc_logo.png" alt="UTSC">
     <h2>CSCB20: Login</h2>
-    <input type="form-element" type="text" placeholder="username"><br>
-    <input type="form-element" type="text" placeholder="password">
-    <button>Submit</button>
+    <form action="/authenticating" method="POST">
+        <input type="text" placeholder="username" name="username"><br>
+        <input type="text" placeholder="password"><br>
+        <input type="checkbox" name="checkbox">Instructor</input>
+        <button>Submit</button>
+    </form>
     <a href="">Don't have an account? Sign up here</a>
+    {% if errors %}
+        {% for message in errors %}
+            <b>{{ message }}</b>
+        {% endfor %}
+    {% endif %}
+
 </div>
 <footer>
     <a href="https://www.utsc.utoronto.ca/cms/faculty-of-computer-science">
