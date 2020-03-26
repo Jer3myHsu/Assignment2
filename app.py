@@ -150,7 +150,7 @@ def team_page():
     db = get_db()
     db.row_factory = make_dicts
     instructors = []
-    for instructor in query_db('select * from Instructors'):
+    for instructor in query_db('select * from Instructor'):
         instructors.append(instructor)
     db.close()
     return render_template('team.html', instructor=instructors)
