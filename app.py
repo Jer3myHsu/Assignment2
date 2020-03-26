@@ -72,12 +72,19 @@ def login_page():
 @app.route('/authenticating', methods=['POST'])
 def authenticating():
     username = request.form['username']
+    password = request.form['password']
     checkbox = request.form.get('checkbox')
     if checkbox == 'on':
         user = Instructor.query.filter_by(username=username).first()
     else:
         user = Student.query.filter_by(username=username).first()
-    if not user:
+    if not user: # User DNE
+        return redirect('/login')
+    if checkbox == 'on':
+        user = Instructor.query.filter_by(username=username, password=password).first()
+    else:
+        user = Student.query.filter_by(username=username, password=password).first()
+    if not user: # Password incorrect
         return redirect('/login')
     login_user(user)
     #if 'next' in session:
