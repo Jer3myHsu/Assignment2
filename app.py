@@ -4,6 +4,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user, current_user
 from urllib.parse import urlparse, urljoin
 
+import sys ### THIS IS FOR DEBUGGING. REMOVE
+
 DATABASE = "./assignment3.db"
 STRING_LIMIT = 30
 app = Flask(__name__)
@@ -14,6 +16,9 @@ db = SQLAlchemy(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login_page'
+
+user_id = 0
+is_instructor = 0
 
 # From https://flask.palletsprojects.com/en/1.1.x/patterns/sqlite3/
 def get_db():
@@ -90,12 +95,16 @@ def authenticating():
     #if 'next' in session:
     #    next = session['next']
     #    return redirect(next)
+    user_id = user.id
+    is_instructor = 1 if checkbox == 'on' else 0
     return redirect('/')
 
 @app.route('/logout')
 @login_required
 def logout():
     logout_user()
+    user_id = 0
+    is_instructor = 0
     return 'Logged Out'
 
 @app.route('/')
