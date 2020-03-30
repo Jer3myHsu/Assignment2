@@ -17,8 +17,9 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login_page'
 
-user_id = 0
-is_instructor = 0
+class User:
+    id = 0
+    is_instructor = False
 
 # From https://flask.palletsprojects.com/en/1.1.x/patterns/sqlite3/
 def get_db():
@@ -70,41 +71,40 @@ class Instructor(UserMixin, db.Model):
 def load_user(user_id):
     return Student.query.get(int(user_id))
 
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login_page():
-    return render_template('login.html')
-
-@app.route('/authenticating', methods=['POST'])
-def authenticating():
-    username = request.form['username']
-    password = request.form['password']
-    checkbox = request.form.get('checkbox')
-    if checkbox == 'on':
-        user = Instructor.query.filter_by(username=username).first()
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        checkbox = request.form.get('checkbox')
+        if checkbox == 'on':
+            user = Instructor.query.filter_by(username=username).first()
+        else:
+            user = Student.query.filter_by(username=username).first()
+        if not user: # User DNE
+            return redirect('/login')
+        if checkbox == 'on':
+            user = Instructor.query.filter_by(username=username, password=password).first()
+        else:
+            user = Student.query.filter_by(username=username, password=password).first()
+        if not user: # Password incorrect
+            return redirect('/login')
+        login_user(user)
+        #if 'next' in session:
+        #    next = session['next']
+        #    return redirect(next)
+        User.id = user.id
+        User.is_instructor = checkbox == 'on'
+        return redirect('/')
     else:
-        user = Student.query.filter_by(username=username).first()
-    if not user: # User DNE
-        return redirect('/login')
-    if checkbox == 'on':
-        user = Instructor.query.filter_by(username=username, password=password).first()
-    else:
-        user = Student.query.filter_by(username=username, password=password).first()
-    if not user: # Password incorrect
-        return redirect('/login')
-    login_user(user)
-    #if 'next' in session:
-    #    next = session['next']
-    #    return redirect(next)
-    user_id = user.id
-    is_instructor = 1 if checkbox == 'on' else 0
-    return redirect('/')
+        return render_template('login.html')
 
 @app.route('/logout')
 @login_required
 def logout():
     logout_user()
-    user_id = 0
-    is_instructor = 0
+    User.id = 0
+    User.is_instructor = False
     return 'Logged Out'
 
 @app.route('/')
@@ -145,13 +145,22 @@ def resources_page():
 @app.route('/instructor_grades')
 @login_required
 def instructor_grades_page():
-    db = get_db()
-    db.row_factory = make_dicts
-    grades = []
-    for grade in query_db('select * from Grades'):
-        grades.append(grade)
-    db.close()
-    return render_template('instructor_grades.html', grade=grades)
+    if User.is_instructor:
+        db = get_db()
+        db.row_factory = make_dicts
+        grades = []
+        for grade in query_db('select * from Grades'):
+            grades.append(grade)
+        db.close()
+        return render_template('instructor_grades.html', grade=grades)
+    else:
+        db = get_db()
+        db.row_factory = make_dicts
+        grades = []
+        for grade in query_db('select * from Grades where Grades.sid == ' + str(User.id)):
+            grades.append(grade)
+        db.close()
+        return render_template('instructor_grades.html', grade=grades)
 
 @app.route('/team')
 @login_required

@@ -36,7 +36,7 @@ form {
 }
 /* Create a custom checkbox */
 .checkmark {
-    transition: background-color 0.3s ease-in-out 0s;
+    transition: background-color 0.2s ease-in-out 0s;
     position: absolute;
     top: 0;
     left: 0;
