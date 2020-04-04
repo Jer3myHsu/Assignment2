@@ -1,6 +1,5 @@
 import sqlite3
 from flask import Flask, render_template, request, g, make_response, redirect, session
-from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user, current_user
 from urllib.parse import urlparse, urljoin
 
@@ -9,17 +8,9 @@ import sys ### THIS IS FOR DEBUGGING. REMOVE
 DATABASE = "./assignment3.db"
 STRING_LIMIT = 30
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///assignment3.db"
 app.config['SECRET_KEY'] = '1jhhgf'
 app.config['USE_SESSION_FOR_NEXT'] = True
-db = SQLAlchemy(app)
-login_manager = LoginManager()
-login_manager.init_app(app)
-login_manager.login_view = 'login_page'
-
-class User:
-    id = 0
-    is_instructor = False
+data = {}
 
 # From https://flask.palletsprojects.com/en/1.1.x/patterns/sqlite3/
 def get_db():
@@ -53,23 +44,8 @@ def is_safe_url(target):
     return test_url.scheme in ('http', 'https') and \
            ref_url.netloc == test_url.netloc
 
-class Student(UserMixin, db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(STRING_LIMIT), unique=True)
-    password = db.Column(db.String(STRING_LIMIT))
-    name = db.Column(db.String(STRING_LIMIT))
-
-class Instructor(UserMixin, db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(STRING_LIMIT), unique=True)
-    password = db.Column(db.String(STRING_LIMIT))
-    name = db.Column(db.String(STRING_LIMIT))
-    role = db.Column(db.String(STRING_LIMIT))
-    email = db.Column(db.String(STRING_LIMIT))
-
-@login_manager.user_loader
-def load_user(user_id):
-    return Student.query.get(int(user_id))
+def check_login(page):
+    return render_template(page) if 'username' in session else redirect('/login')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login_page():
@@ -77,101 +53,101 @@ def login_page():
         username = request.form['username']
         password = request.form['password']
         checkbox = request.form.get('checkbox')
+        db = get_db()
+        db.row_factory = make_dicts
         if checkbox == 'on':
-            user = Instructor.query.filter_by(username=username).first()
+            user = query_db("select * from Instructor where username == '{}'".format(str(username)), one=True)
         else:
-            user = Student.query.filter_by(username=username).first()
+            user = query_db("select * from Student where username == '{}'".format(str(username)), one=True)
         if not user: # User DNE
             return redirect('/login')
         if checkbox == 'on':
-            user = Instructor.query.filter_by(username=username, password=password).first()
+            user = query_db("select * from Instructor where username == '{}' and password == '{}'".format(str(username), str(password)), one=True)
         else:
-            user = Student.query.filter_by(username=username, password=password).first()
+            user = query_db("select * from Student where username == '{}' and password == '{}'".format(str(username), str(password)), one=True)
         if not user: # Password incorrect
             return redirect('/login')
-        login_user(user)
+        db.close()
         #if 'next' in session:
         #    next = session['next']
         #    return redirect(next)
-        User.id = user.id
-        User.is_instructor = checkbox == 'on'
+        session['username'] = username
+        data['type'] = 'instructor' if checkbox == 'on' else 'student'
+        return redirect('/')
+    elif 'username' in session:
         return redirect('/')
     else:
         return render_template('login.html')
 
 @app.route('/logout')
-@login_required
 def logout():
-    logout_user()
-    User.id = 0
-    User.is_instructor = False
-    return 'Logged Out'
+    session.pop('username', None)
+    data.pop('type', None)
+    return redirect('/login')
 
 @app.route('/')
-@login_required
 def root():
-    return render_template('index.html')
+    return check_login('index.html')
 
 @app.route('/assignment')
-@login_required
 def assignment_page():
-    return render_template('assignment.html')
+    return check_login('assignment.html')
 
 @app.route('/calendar')
-@login_required
 def calendar_page():
-    return render_template('calendar.html')
+    return check_login('calendar.html')
 
 @app.route('/feedback')
-@login_required
 def feedback_page():
-    return render_template('feedback.html')
+    return check_login('feedback.html')
 
 @app.route('/labs')
-@login_required
 def labs_page():
-    return render_template('labs.html')
+    return check_login('labs.html')
 
 @app.route('/lectures')
-@login_required
 def lectures_page():
-    return render_template('lectures.html')
+    return check_login('lectures.html')
 
 @app.route('/resources')
-@login_required
 def resources_page():
-    return render_template('resources.html')
+    return check_login('resources.html')
 
-@app.route('/instructor_grades')
-@login_required
-def instructor_grades_page():
-    if User.is_instructor:
-        db = get_db()
-        db.row_factory = make_dicts
-        grades = []
-        for grade in query_db('select * from Grades'):
-            grades.append(grade)
-        db.close()
-        return render_template('instructor_grades.html', grade=grades)
+@app.route('/grades')
+def grades_page():
+    if 'username' in session:
+        if data['type'] == 'instructor':
+            db = get_db()
+            db.row_factory = make_dicts
+            grades = []
+            for grade in query_db('select * from Grades G, Student S where G.username == S.username'):
+                grades.append(grade)
+            db.close()
+            return render_template('instructor_grades.html', grade=grades)
+        else:
+            db = get_db()
+            db.row_factory = make_dicts
+            grades = []
+            for grade in query_db('''select * from  Grades G, Student S where G.username == S.username
+                and G.username == '{}' '''.format(str(session['username']))):
+                grades.append(grade)
+            db.close()
+            return render_template('instructor_grades.html', grade=grades)
     else:
-        db = get_db()
-        db.row_factory = make_dicts
-        grades = []
-        for grade in query_db('select * from Grades where Grades.sid == ' + str(User.id)):
-            grades.append(grade)
-        db.close()
-        return render_template('instructor_grades.html', grade=grades)
+        return redirect('/login')
 
 @app.route('/team')
-@login_required
 def team_page():
-    db = get_db()
-    db.row_factory = make_dicts
-    instructors = []
-    for instructor in query_db('select * from Instructor'):
-        instructors.append(instructor)
-    db.close()
-    return render_template('team.html', instructor=instructors)
+    if 'username' in session:
+        db = get_db()
+        db.row_factory = make_dicts
+        instructors = []
+        for instructor in query_db('select * from Instructor'):
+            instructors.append(instructor)
+        db.close()
+        return render_template('team.html', instructor=instructors)
+    else:
+        return redirect('/login')
 
 @app.route('/<incorrect>')
 def incorrect_url(incorrect):
