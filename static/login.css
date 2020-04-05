@@ -76,6 +76,13 @@ input {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 14pt;
 }
+.message {
+    color: red;
+    font-weight: bolder;
+    text-align: center;
+    margin: 0px;
+    padding: 7px;
+}
 a {
     margin: 0px 20px;
 }

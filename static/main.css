@@ -149,7 +149,7 @@ button {
     transition: background-color 0.3s ease-in-out 0s;
     font-size: 14pt;
     margin: 20px;
-    padding: 5px;
+    padding: 5px 10px;
     border-radius: 5px;
     background-color: tomato;
     border: 0;

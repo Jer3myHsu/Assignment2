@@ -1,5 +1,5 @@
 import sqlite3
-from flask import Flask, render_template, request, g, make_response, redirect, session
+from flask import Flask, render_template, request, g, make_response, redirect, session, flash
 from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user, current_user
 from urllib.parse import urlparse, urljoin
 
@@ -59,20 +59,22 @@ def login_page():
             user = query_db("select * from Instructor where username == '{}'".format(str(username)), one=True)
         else:
             user = query_db("select * from Student where username == '{}'".format(str(username)), one=True)
-        if not user: # User DNE
+        if not user:
+            flash('\U000026D4 Incorrect username...') # \U000026D4 is ⛔ (no entry emoji)
             return redirect('/login')
         if checkbox == 'on':
             user = query_db("select * from Instructor where username == '{}' and password == '{}'".format(str(username), str(password)), one=True)
         else:
             user = query_db("select * from Student where username == '{}' and password == '{}'".format(str(username), str(password)), one=True)
         if not user: # Password incorrect
+            flash('\U000026D4 Incorrect password...')
             return redirect('/login')
         db.close()
-        #if 'next' in session:
-        #    next = session['next']
-        #    return redirect(next)
         session['username'] = username
         data['type'] = 'instructor' if checkbox == 'on' else 'student'
+        if 'next' in session:
+            next = session['next']
+            return redirect(next)
         return redirect('/')
     elif 'username' in session:
         return redirect('/')

@@ -17,14 +17,13 @@
         <label class="container">
             <input type="checkbox" name="checkbox">I'm an Instructor
             <span class="checkmark"></span>
-          </label>
+        </label>
+        {% for message in get_flashed_messages() %}
+            <h3 class="message">{{ message }}</h3>
+        {% endfor %}
         <button>Submit</button>
     </form>
     <a href="">Don't have an account? Sign up here</a>
-    {% for message in errors %}
-        <b>{{ message }}</b>
-    {% endfor %}
-
 </div>
 <footer>
     <a href="https://www.utsc.utoronto.ca/cms/faculty-of-computer-science">
