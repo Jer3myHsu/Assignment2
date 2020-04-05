@@ -100,7 +100,21 @@ def calendar_page():
 
 @app.route('/feedback')
 def feedback_page():
-    return check_login('feedback.html')
+    if 'username' in session:
+        if session['type'] == 'instructor':
+            db = get_db()
+            db.row_factory = make_dicts
+            feedbacks = []
+            for feedback in query_db('select * from Feedback F, Instructor I where F.username == I.username'):
+                feedbacks.append(feedback)
+            for feedback in query_db('select * from Feedback F, Student S where F.username == S.username'):
+                feedbacks.append(feedback)
+            db.close()
+            return render_template('instructor_feedback.html', feedback=feedbacks)
+        else:
+           return check_login('feedback.html') 
+    else:
+        return redirect('/login')
 
 @app.route('/labs')
 def labs_page():
