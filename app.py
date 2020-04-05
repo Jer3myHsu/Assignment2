@@ -10,7 +10,6 @@ STRING_LIMIT = 30
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '1jhhgf'
 app.config['USE_SESSION_FOR_NEXT'] = True
-data = {}
 
 # From https://flask.palletsprojects.com/en/1.1.x/patterns/sqlite3/
 def get_db():
@@ -66,12 +65,12 @@ def login_page():
             user = query_db("select * from Instructor where username == '{}' and password == '{}'".format(str(username), str(password)), one=True)
         else:
             user = query_db("select * from Student where username == '{}' and password == '{}'".format(str(username), str(password)), one=True)
-        if not user: # Password incorrect
+        if not user:
             flash('\U000026D4 Incorrect password...')
             return redirect('/login')
         db.close()
         session['username'] = username
-        data['type'] = 'instructor' if checkbox == 'on' else 'student'
+        session['type'] = 'instructor' if checkbox == 'on' else 'student'
         if 'next' in session:
             next = session['next']
             return redirect(next)
@@ -84,7 +83,7 @@ def login_page():
 @app.route('/logout')
 def logout():
     session.pop('username', None)
-    data.pop('type', None)
+    session.pop('type', None)
     return redirect('/login')
 
 @app.route('/')
@@ -118,7 +117,7 @@ def resources_page():
 @app.route('/grades')
 def grades_page():
     if 'username' in session:
-        if data['type'] == 'instructor':
+        if session['type'] == 'instructor':
             db = get_db()
             db.row_factory = make_dicts
             grades = []
