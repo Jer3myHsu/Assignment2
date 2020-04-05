@@ -134,7 +134,7 @@ def grades_page():
                 and G.username == '{}' '''.format(str(session['username']))):
                 grades.append(grade)
             db.close()
-            return render_template('instructor_grades.html', grade=grades)
+            return render_template('student_grades.html', grade=grades)
     else:
         return redirect('/login')
 
