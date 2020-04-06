@@ -210,7 +210,7 @@ def grades_page():
                     return render_template('instructor_grades.html', grade=grades)
                 else:    
                     for grade in query_db('''select * from Grades G, Student S where G.username == S.username and
-                        S.name == '{}' '''.format(str(name))):
+                        S.name == '{}' '''.format(name)):
                         grades.append(grade)
                     db.close()
                     return render_template('instructor_grades.html', grade=grades)
@@ -227,7 +227,7 @@ def grades_page():
             db.row_factory = make_dicts
             grades = []
             for grade in query_db('''select * from  Grades G, Student S where G.username == S.username
-                and G.username == '{}' '''.format(str(session['username']))):
+                and G.username == '{}' '''.format(session['username'])):
                 grades.append(grade)
             db.close()
             return render_template('student_grades.html', grade=grades)
@@ -263,7 +263,7 @@ def remark_page():
                     return render_template('instructor_remark.html', remark=remarks)
                 else:    
                     for remark in query_db('''select * from Remark R, Student S where R.username == S.username and
-                        S.name == '{}' '''.format(str(name))):
+                        S.name == '{}' '''.format(name)):
                         remarks.append(remark)
                     db.close()
                     return render_template('instructor_remark.html', remark=remarks)
@@ -283,7 +283,7 @@ def remark_page():
                 db = get_db()
                 db.row_factory = make_dicts
                 query_db("insert into Remark (username, assignment, reason)\
-                values ('{}','{}','{}')".format(str(username), str(assignment), str(reason)))
+                values ('{}','{}','{}')".format(username, assignment, reason))
                 db.commit()
                 db.close()
                 return redirect('/grades')
