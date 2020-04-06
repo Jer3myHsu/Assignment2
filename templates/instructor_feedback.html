@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="static/table.css"/>
+    <link rel="stylesheet" href="static/instructor_feedback.css"/>
     <link rel="icon" href="static/images/favicon.png">
     <title>CSCB20: Feedback</title>
 </head>
@@ -27,29 +27,61 @@
     <h1>Feedback</h1>
     <div class="table">
         <div class="heading">
-            <div class="cell">Name</div>
             <div class="cell">Email</div>
-            <div class="cell">Message</div>
+            <div class="cell">What do you like about the instructor teaching?</div>
+            <div class="cell">What do you recommend the instructor to do to improve their teaching?</div>
+            <div class="cell">What do you like about the labs?</div>
+            <div class="cell">What do you recommend the lab instructors to do to improve their lab teaching?</div>
         </div>
         {% for item in feedback %}
         <div class="row">
-            <div class="cell">{{ item['name'] }}</div>
-            <div class="cell">{{ item['email'] }}</div>
-            <div class="cell">{{ item['message'] }}</div>
+            <div class="cell">{{ item['s_email'] }}</div>
+            <div class="cell">{{ item['q_a'] }}</div>
+            <div class="cell">{{ item['q_b'] }}</div>
+            <div class="cell">{{ item['q_c'] }}</div>
+            <div class="cell">{{ item['q_d'] }}</div>
         </div>
         {% endfor %}
         </div>    
     <div class="mobileTable">
         <div class="heading">
-            <div class="cell">Name</div>
             <div class="cell">Email</div>
-            <div class="cell">Message</div>
+            <div class="cell">What do you like about the instructor teaching?</div>
         </div>
         {% for item in feedback %}
         <div class="row">
-            <div class="cell">{{ item['Name'] }}</div>
-            <div class="cell">{{ item['email'] }}</div>
-            <div class="cell">{{ item['message'] }}</div>
+            <div class="cell">{{ item['s_email'] }}</div>
+            <div class="cell">{{ item['q_a'] }}</div>
+        </div>
+        {% endfor %}
+        <div class="heading">
+            <div class="cell">Email</div>
+            <div class="cell">What do you recommend the instructor to do to improve their teaching?</div>
+        </div>
+        {% for item in feedback %}
+        <div class="row">
+            <div class="cell">{{ item['s_email'] }}</div>
+            <div class="cell">{{ item['q_b'] }}</div>
+        </div>
+        {% endfor %}
+        <div class="heading">
+            <div class="cell">Email</div>
+            <div class="cell">What do you like about the labs?</div>
+        </div>
+        {% for item in feedback %}
+        <div class="row">
+            <div class="cell">{{ item['s_email'] }}</div>
+            <div class="cell">{{ item['q_c'] }}</div>
+        </div>
+        {% endfor %}
+        <div class="heading">
+            <div class="cell">Email</div>
+            <div class="cell">What do you recommend the lab instructors to do to improve their lab teaching?</div>
+        </div>
+        {% for item in feedback %}
+        <div class="row">
+            <div class="cell">{{ item['s_email'] }}</div>
+            <div class="cell">{{ item['q_d'] }}</div>
         </div>
         {% endfor %}
     </div>

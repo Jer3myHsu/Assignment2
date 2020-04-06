@@ -149,9 +149,8 @@ def feedback_page():
             db = get_db()
             db.row_factory = make_dicts
             feedbacks = []
-            for feedback in query_db('select * from Feedback F, Instructor I where F.username == I.username'):
-                feedbacks.append(feedback)
-            for feedback in query_db('select * from Feedback F, Student S where F.username == S.username'):
+            for feedback in query_db("select * from Feedback F, Instructor I where F.username == I.username\
+                and I.username == '{}'".format(session['username'])):
                 feedbacks.append(feedback)
             db.close()
             return render_template('instructor_feedback.html', feedback=feedbacks)
@@ -169,8 +168,8 @@ def feedback_page():
                     flash('There is no message to send...')
                     return redirect('/feedback')
                 if email_checkbox == 'on':
-                    email = query_db("select email from Student where username == '{}'".format(session['username']), one=True)['email']
-                    query_db("insert into Feedback(username, email, q_a, q_b, q_c, q_d)\
+                    email = query_db("select email from Student where username == '{}'".format(session['username']), one=True)['s_email']
+                    query_db("insert into Feedback(username, s_email, q_a, q_b, q_c, q_d)\
                         values ('{}','{}','{}','{}','{}','{}')".format(instructor, email, q_a, q_b, q_c, q_d))
                 else:
                     query_db("insert into Feedback(username, q_a, q_b, q_c, q_d)\
