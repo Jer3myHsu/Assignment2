@@ -1,6 +1,6 @@
 import sqlite3
 from flask import Flask, render_template, request, g, make_response, redirect, session, flash
-from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user, current_user
+#from flask_login import login_required, login_user, logout_user, current_user
 from urllib.parse import urlparse, urljoin
 
 import sys ### THIS IS FOR DEBUGGING. REMOVE
@@ -45,6 +45,49 @@ def is_safe_url(target):
 
 def check_login(page):
     return render_template(page) if 'username' in session else redirect('/login')
+
+@app.route('/signup', methods=['GET', 'POST'])
+def signup_page():
+    if request.method == 'POST':
+        error = False
+        email = request.form['email']
+        name = request.form['name']
+        username = request.form['username']
+        password = request.form['password']
+        confirm_password = request.form['confirm_password']
+        checkbox = request.form.get('checkbox')
+        db = get_db()
+        db.row_factory = make_dicts
+        if checkbox == 'on':
+            user = query_db("select * from Instructor where username == '{}'".format(str(username)), one=True)
+        else:
+            user = query_db("select * from Student where username == '{}'".format(str(username)), one=True)
+        if user:
+            flash('\U000026D4 Username is taken')
+            error = True
+        if str(username) == "":
+            flash('\U000026D4 Username cannot be empty')
+            error = True
+        if str(password) != str(confirm_password):
+            flash('\U000026D4 Password does not match')
+            error = True
+        if str(password) == "":
+            flash('\U000026D4 Password cannot be empty')
+            error = True
+        if error:
+            return redirect('/signup')
+        if checkbox == 'on':
+            query_db("insert into Instructor (username, password, name, role, email)\
+                values ('{}','{}','{}','{}', '{}')".format(str(username), str(password), str(name), 'Teaching Assistant', str(email)))
+        else:
+            query_db("insert into Student(username, password, name, email)\
+                values ('{}','{}','{}','{}')".format(str(username), str(password), str(name), str(email)))
+        db.close()
+        return redirect('/login')
+    elif 'username' in session:
+        return redirect('/')
+    else:
+        return render_template('signup.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login_page():
