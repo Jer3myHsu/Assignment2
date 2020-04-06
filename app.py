@@ -208,6 +208,16 @@ def team_page():
     else:
         return redirect('/login')
 
+@app.route('/remark')
+def remark_page():
+    if 'username' in session:
+        if session['type'] == 'instructor':
+            return check_login('instructor_remark.html')
+        else:
+            return check_login('student_remark.html')    
+    else:
+        return redirect('/login')
+
 @app.route('/<incorrect>')
 def incorrect_url(incorrect):
     return redirect('/')
