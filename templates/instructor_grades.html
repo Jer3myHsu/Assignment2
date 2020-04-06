@@ -27,7 +27,7 @@
     <h1>Grades</h1>
     <div class="table">
         <div class="heading">
-            <div class="cell">Student Id</div>
+            <div class="cell">Student Name</div>
             <div class="cell">Assignment</div>
             <div class="cell">Grade</div>
         </div>
@@ -38,10 +38,17 @@
             <div class="cell">{{ item['grade'] }}</div>
         </div>
         {% endfor %}
+        <form method="POST">
+        <div class="text">
+        <br>Search a Name<br>
+        <input type="text" placeholder="Name" name="name">
+    </div>
+    <button>Submit</button>
+    </form>
         </div>    
     <div class="mobileTable">
         <div class="heading">
-            <div class="cell">Student Id</div>
+            <div class="cell">Student Name</div>
             <div class="cell">Assignment</div>
             <div class="cell">Grade</div>
         </div>
@@ -52,6 +59,13 @@
             <div class="cell">{{ item['grade'] }}</div>
         </div>
         {% endfor %}
+        <form method="POST">
+        <div class="text">
+        <br>Search a Name<br>
+        <input type="text" placeholder="Name" name="name">
+    </div>
+    <button>Submit</button>
+    </form>
     </div>
 </div>
 <footer>

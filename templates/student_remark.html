@@ -26,14 +26,16 @@
 <div class="content">
     <h1>Remark Request</h1>
     <p class="description">
-        Please enter the Assignment, Question(s) that you would like to have remarked and the reason for the remark.
+        Please enter the Assignment and Question(s) that you would like to have remarked and the reason for the remark.
     </p>
     <h2>Remark</h2>
+    <form method="POST">
     <div class="text">
-        <input type="text" placeholder="Assignment">
-        <textarea rows="10" placeholder="Reason"></textarea>
+        <input type="text" placeholder="Assignment" name="assignment">
+        <textarea rows="10" placeholder="Question/Reason" name="reason"></textarea>
     </div>
     <button>Submit</button>
+    </form>
 </div>
 <footer>
     <a href="https://www.utsc.utoronto.ca/cms/faculty-of-computer-science">
