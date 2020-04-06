@@ -82,6 +82,7 @@ def signup_page():
         else:
             query_db("insert into Student(username, password, name, email)\
                 values ('{}','{}','{}','{}')".format(str(username), str(password), str(name), str(email)))
+        db.commit()
         db.close()
         return redirect('/login')
     elif 'username' in session:
