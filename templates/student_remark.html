@@ -34,6 +34,9 @@
         <input type="text" placeholder="Assignment" name="assignment">
         <textarea rows="10" placeholder="Question/Reason" name="reason"></textarea>
     </div>
+    {% for message in get_flashed_messages() %}
+        <h3 class="message">{{ message }}</h3>
+    {% endfor %}
     <button>Submit</button>
     </form>
 </div>
