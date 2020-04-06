@@ -172,17 +172,34 @@ def lectures_page():
 def resources_page():
     return check_login('resources.html')
 
-@app.route('/grades')
+@app.route('/grades', methods=['GET', 'POST'])
 def grades_page():
     if 'username' in session:
         if session['type'] == 'instructor':
-            db = get_db()
-            db.row_factory = make_dicts
-            grades = []
-            for grade in query_db('select * from Grades G, Student S where G.username == S.username'):
-                grades.append(grade)
-            db.close()
-            return render_template('instructor_grades.html', grade=grades)
+            if request.method == 'POST':
+                name = request.form['name']
+                db = get_db()
+                db.row_factory = make_dicts
+                grades = []
+                if name.strip() == '':
+                    for grade in query_db('select * from Grades G, Student S where G.username == S.username'):
+                        grades.append(grade)
+                    db.close()
+                    return render_template('instructor_grades.html', grade=grades)
+                else:    
+                    for grade in query_db('''select * from Grades G, Student S where G.username == S.username and
+                        S.name == '{}' '''.format(str(name))):
+                        grades.append(grade)
+                    db.close()
+                    return render_template('instructor_grades.html', grade=grades)
+            else:
+                db = get_db()
+                db.row_factory = make_dicts
+                grades = []
+                for grade in query_db('select * from Grades G, Student S where G.username == S.username'):
+                    grades.append(grade)
+                db.close()
+                return render_template('instructor_grades.html', grade=grades)
         else:
             db = get_db()
             db.row_factory = make_dicts
@@ -208,13 +225,48 @@ def team_page():
     else:
         return redirect('/login')
 
-@app.route('/remark')
+@app.route('/remark', methods=['GET', 'POST'])
 def remark_page():
     if 'username' in session:
         if session['type'] == 'instructor':
-            return check_login('instructor_remark.html')
+            if request.method == 'POST':
+                name = request.form['name']
+                db = get_db()
+                db.row_factory = make_dicts
+                remarks = []
+                if name.strip() == '':
+                    for remark in query_db('select * from Remark R, Student S where R.username == S.username'):
+                        remarks.append(remark)
+                    db.close()
+                    return render_template('instructor_remark.html', remark=remarks)
+                else:    
+                    for remark in query_db('''select * from Remark R, Student S where R.username == S.username and
+                        S.name == '{}' '''.format(str(name))):
+                        remarks.append(remark)
+                    db.close()
+                    return render_template('instructor_remark.html', remark=remarks)
+            else:
+                db = get_db()
+                db.row_factory = make_dicts
+                remarks = []
+                for remark in query_db('select * from Remark R, Student S where R.username == S.username'):
+                    remarks.append(remark)
+                db.close()
+                return render_template('instructor_remark.html', remark=remarks)
         else:
-            return check_login('student_remark.html')    
+            if request.method == 'POST':
+                username = session.get('username')
+                assignment = request.form['assignment']
+                reason = request.form['reason']
+                db = get_db()
+                db.row_factory = make_dicts
+                query_db("insert into Remark (username, assignment, reason)\
+                values ('{}','{}','{}')".format(str(username), str(assignment), str(reason)))
+                db.commit()
+                db.close()
+                return redirect('/grades')
+            else:
+                return check_login('student_remark.html')    
     else:
         return redirect('/login')
 
