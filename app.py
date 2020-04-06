@@ -59,29 +59,29 @@ def signup_page():
         db = get_db()
         db.row_factory = make_dicts
         if checkbox == 'on':
-            user = query_db("select * from Instructor where username == '{}'".format(str(username)), one=True)
+            user = query_db("select * from Instructor where username == '{}'".format(username), one=True)
         else:
-            user = query_db("select * from Student where username == '{}'".format(str(username)), one=True)
+            user = query_db("select * from Student where username == '{}'".format(username), one=True)
         if user:
             flash('\U000026D4 Username is taken')
             error = True
-        if str(username) == "":
+        if username == "":
             flash('\U000026D4 Username cannot be empty')
             error = True
-        if str(password) != str(confirm_password):
+        if password != confirm_password:
             flash('\U000026D4 Password does not match')
             error = True
-        if str(password) == "":
+        if password == "":
             flash('\U000026D4 Password cannot be empty')
             error = True
         if error:
             return redirect('/signup')
         if checkbox == 'on':
             query_db("insert into Instructor (username, password, name, role, email)\
-                values ('{}','{}','{}','{}', '{}')".format(str(username), str(password), str(name), 'Teaching Assistant', str(email)))
+                values ('{}','{}','{}','{}', '{}')".format(username, password, name, 'Teaching Assistant', email))
         else:
             query_db("insert into Student(username, password, name, email)\
-                values ('{}','{}','{}','{}')".format(str(username), str(password), str(name), str(email)))
+                values ('{}','{}','{}','{}')".format(username, password, name, email))
         db.commit()
         db.close()
         return redirect('/login')
@@ -99,16 +99,16 @@ def login_page():
         db = get_db()
         db.row_factory = make_dicts
         if checkbox == 'on':
-            user = query_db("select * from Instructor where username == '{}'".format(str(username)), one=True)
+            user = query_db("select * from Instructor where username == '{}'".format(username), one=True)
         else:
-            user = query_db("select * from Student where username == '{}'".format(str(username)), one=True)
+            user = query_db("select * from Student where username == '{}'".format(username), one=True)
         if not user:
             flash('\U000026D4 Incorrect username...') # \U000026D4 is ⛔ (no entry emoji)
             return redirect('/login')
         if checkbox == 'on':
-            user = query_db("select * from Instructor where username == '{}' and password == '{}'".format(str(username), str(password)), one=True)
+            user = query_db("select * from Instructor where username == '{}' and password == '{}'".format(username, password), one=True)
         else:
-            user = query_db("select * from Student where username == '{}' and password == '{}'".format(str(username), str(password)), one=True)
+            user = query_db("select * from Student where username == '{}' and password == '{}'".format(username, password), one=True)
         if not user:
             flash('\U000026D4 Incorrect password...')
             return redirect('/login')
@@ -142,7 +142,7 @@ def assignment_page():
 def calendar_page():
     return check_login('calendar.html')
 
-@app.route('/feedback')
+@app.route('/feedback', methods=['GET', 'POST'])
 def feedback_page():
     if 'username' in session:
         if session['type'] == 'instructor':
@@ -156,7 +156,29 @@ def feedback_page():
             db.close()
             return render_template('instructor_feedback.html', feedback=feedbacks)
         else:
-           return check_login('feedback.html') 
+            db = get_db()
+            db.row_factory = make_dicts
+            if request.method == 'POST':
+                instructor = request.form['instructor_list']
+                q_a = request.form['q_a']
+                q_b = request.form['q_b']
+                q_c = request.form['q_c']
+                q_d = request.form['q_d']
+                email_checkbox = request.form['email_checkbox']
+                email = "-"
+                if q_a.strip() == '' and q_b.strip() == '' and q_c.strip() == '' and q_d.strip() == '':
+                    flash('There is no message to send...')
+                    return redirect('/feedback')
+                if email_checkbox == 'on':
+                    email = query_db("select email from Student where username == '{}'".format(session['username']), one=True)
+                query_db("insert into Feedback(username, email, q_a, q_b, q_c, q_d)\
+                values ('{}','{}','{}','{}')".format(instructor, email, q_a, q_b, q_c, q_d))
+            else:
+                instructors = []
+                for instructor in query_db('select * from Instructor'):
+                    instructors.append(instructor)
+                db.close()
+                return render_template('student_feedback.html', instructor=instructors) 
     else:
         return redirect('/login')
 
