@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="static/table.css"/>
     <link rel="icon" href="static/images/favicon.png">
-    <title>CSCB20: Grades</title>
+    <title>CSCB20: Feedback</title>
 </head>
 <body>
 <div id="navigation"></div>
@@ -24,32 +24,32 @@
     </ul>
 </div>
 <div class="content">
-    <h1>Grades</h1>
+    <h1>Feedback</h1>
     <div class="table">
         <div class="heading">
-            <div class="cell">Student Id</div>
-            <div class="cell">Assignment</div>
-            <div class="cell">Grade</div>
+            <div class="cell">Name</div>
+            <div class="cell">Email</div>
+            <div class="cell">Message</div>
         </div>
-        {% for item in grade %}
+        {% for item in feedback %}
         <div class="row">
             <div class="cell">{{ item['name'] }}</div>
-            <div class="cell">{{ item['assignment'] }}</div>
-            <div class="cell">{{ item['grade'] }}</div>
+            <div class="cell">{{ item['email'] }}</div>
+            <div class="cell">{{ item['message'] }}</div>
         </div>
         {% endfor %}
         </div>    
     <div class="mobileTable">
         <div class="heading">
-            <div class="cell">Student Id</div>
-            <div class="cell">Assignment</div>
-            <div class="cell">Grade</div>
+            <div class="cell">Name</div>
+            <div class="cell">Email</div>
+            <div class="cell">Message</div>
         </div>
-        {% for item in grade %}
+        {% for item in feedback %}
         <div class="row">
-            <div class="cell">{{ item['name'] }}</div>
-            <div class="cell">{{ item['assignment'] }}</div>
-            <div class="cell">{{ item['grade'] }}</div>
+            <div class="cell">{{ item['Name'] }}</div>
+            <div class="cell">{{ item['email'] }}</div>
+            <div class="cell">{{ item['message'] }}</div>
         </div>
         {% endfor %}
     </div>
