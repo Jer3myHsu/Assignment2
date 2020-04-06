@@ -163,6 +163,14 @@ button:hover {
 button:active {
     background-color: darkgray;
 }
+.flash_message {
+    margin: 0px 20px;
+    font-size: 14pt;
+    border-radius: 2px;
+    text-align: center;
+    border: solid palegreen;
+    background-color: palegreen;
+}
 footer {
     text-align: center;
     color: gray;

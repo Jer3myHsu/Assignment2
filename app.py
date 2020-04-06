@@ -164,15 +164,21 @@ def feedback_page():
                 q_b = request.form['q_b']
                 q_c = request.form['q_c']
                 q_d = request.form['q_d']
-                email_checkbox = request.form['email_checkbox']
-                email = "-"
+                email_checkbox = request.form.get('email_checkbox')
                 if q_a.strip() == '' and q_b.strip() == '' and q_c.strip() == '' and q_d.strip() == '':
                     flash('There is no message to send...')
                     return redirect('/feedback')
                 if email_checkbox == 'on':
-                    email = query_db("select email from Student where username == '{}'".format(session['username']), one=True)
-                query_db("insert into Feedback(username, email, q_a, q_b, q_c, q_d)\
-                values ('{}','{}','{}','{}')".format(instructor, email, q_a, q_b, q_c, q_d))
+                    email = query_db("select email from Student where username == '{}'".format(session['username']), one=True)['email']
+                    query_db("insert into Feedback(username, email, q_a, q_b, q_c, q_d)\
+                        values ('{}','{}','{}','{}','{}','{}')".format(instructor, email, q_a, q_b, q_c, q_d))
+                else:
+                    query_db("insert into Feedback(username, q_a, q_b, q_c, q_d)\
+                        values ('{}','{}','{}','{}','{}')".format(instructor, q_a, q_b, q_c, q_d))
+                db.commit()
+                db.close()
+                flash('Submitted Successfully!')
+                return redirect('/feedback')
             else:
                 instructors = []
                 for instructor in query_db('select * from Instructor'):

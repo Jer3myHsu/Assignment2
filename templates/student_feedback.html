@@ -32,10 +32,10 @@
     <h2>Feedback</h2>
     <form method="POST">
         <div class="text">
-            <label class="text">choose Instructor: </label>
+            <label class="text">Choose Instructor: </label>
             <select id="instructor_list" name="instructor_list">
                 {% for item in instructor %}
-                <option value="{{ item['username'] }}">{{ item['name'] }}</option>
+                <option class="dropdown_item" value="{{ item['username'] }}">{{ item['name'] }}</option>
                 {% endfor %}
             </select>
             <textarea rows="3" placeholder="What do you like about the instructor teaching?" name="q_a"></textarea>
@@ -47,10 +47,10 @@
                 <span class="checkmark"></span>
             </label>
         </div>
-    </form>
     <button>Submit</button>
+    </form>
     {% for message in get_flashed_messages() %}
-        <h3 class="message">{{ message }}</h3>
+        <h3 class="flash_message">{{ message }}</h3>
     {% endfor %}
 </div>
 <footer>
