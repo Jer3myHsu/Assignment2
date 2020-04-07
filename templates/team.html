@@ -45,49 +45,14 @@
         <div class="heading">
             <div class="cell">Contact</div>
         </div>
+        {% for item in instructor %}
         <div class="row">
-            <div class="cell">Instructor
-                <br>Dr. Anna Bretscher
-                <a href="mailto:bretscher@utsc.utoronto.ca">bretscher@utsc.utoronto.ca</a>
+            <div class="cell">{{ item['role'] }}
+                <br>{{ item['name'] }}
+                <a href="mailto:{{ item['email'] }}">{{ item['email'] }}</a>
             </div>
         </div>
-        <div class="row">
-            <div class="cell">Teaching Assistant
-                <br>Vidya Ananda
-                <a href="mailto:vidya.ananda@utsc.utoronto.ca">vidya.ananda@utsc.utoronto.ca</a>
-            </div>
-        </div>
-        <div class="row">
-            <div class="cell">Teaching Assistant
-                <br>Sakina Gadriwala
-                <a href="">mail@utsc.utoronto.ca</a>
-            </div>
-        </div>
-        <div class="row">
-            <div class="cell">Teaching Assistant
-                <br>Brian Lam
-                <a href="">mail@utsc.utoronto.ca</a>
-            </div>
-        </div>
-        <div class="row">
-            <div class="cell">Teaching Assistant
-                <br>Frederic Pun
-                <a href="mailto:frederic.pun@mail.utoronto.ca">frederic.pun@mail.utoronto.ca</a>
-            </div>
-        </div>
-        <div class="row">
-            <div class="cell">Teaching Assistant
-                <br>Dharmik Shah
-                <a href="">mail@utsc.utoronto.ca</a>
-            </div>
-        </div>
-        <div class="row">
-            <div class="cell">Teaching Assistant
-                <br>Kevin Zhang
-                <a href="">mail@utsc.utoronto.ca</a>
-            </div>
-        </div>
-    </div>
+        {% endfor %}
     <p class="description">
         For Office Hours, check the <a href="calendar">Calendar</a>!
     </p>
