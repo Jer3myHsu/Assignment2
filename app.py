@@ -65,20 +65,23 @@ def signup_page():
         if user:
             flash('\U000026D4 Username is taken')
             error = True
-        if username == "":
+        if username == '':
             flash('\U000026D4 Username cannot be empty')
             error = True
         if password != confirm_password:
             flash('\U000026D4 Password does not match')
             error = True
-        if password == "":
+        if password == '':
             flash('\U000026D4 Password cannot be empty')
             error = True
         if error:
             return redirect('/signup')
         if checkbox == 'on':
+            role = request.form['role']
+            if role == '':
+                role = 'Teaching Assistant'
             query_db("insert into Instructor (username, password, name, role, email)\
-                values ('{}','{}','{}','{}', '{}')".format(username, password, name, 'Teaching Assistant', email))
+                values ('{}','{}','{}','{}', '{}')".format(username, password, name, role, email))
         else:
             query_db("insert into Student(username, password, name, email)\
                 values ('{}','{}','{}','{}')".format(username, password, name, email))

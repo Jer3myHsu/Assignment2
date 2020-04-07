@@ -4,27 +4,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="static/css/signup.css"/>
     <link rel="icon" href="static/images/favicon.png">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="static/js/signup.js"></script>
     <title>CSCB20: Sign up</title>
 </head>
 <body>
 <div class="content">
     <h2>CSCB20: Login</h2>
     <form method="POST">
-        <input type="text" placeholder="Email" name="email"><br>
-        <input type="text" placeholder="Name" name="name"><br>
-        <input type="text" placeholder="Username" name="username"><br>
-        <input type="password" placeholder="Password" name="password"><br>
-        <input type="password" placeholder="Confirm Password" name="confirm_password"><br>
+        <input type="text" placeholder="Email" name="email">
+        <input type="text" placeholder="Name" name="name">
+        <input type="text" placeholder="Username" name="username">
+        <div class="password">
+            <input type="password" placeholder="Password" name="password">
+            <input type="password" placeholder="Confirm Password" name="confirm_password">
+        </div>
+        
         <!--Checkbox from https://www.w3schools.com/howto/howto_css_custom_checkbox.asp-->
         <label class="container">
             <input type="checkbox" name="checkbox">I'm an Instructor
             <span class="checkmark"></span>
         </label>
-        {% for message in get_flashed_messages() %}
-            <h3 class="message">{{ message }}</h3>
-        {% endfor %}
+        <select class="role" name="role">
+            <option class="dropdown_item" value="Teaching Assistant">Teaching Assistant</option>
+            <option class="dropdown_item" value="Instructor">Instructor</option>
+        </select>
         <button>Sign up</button>
     </form>
+    {% for message in get_flashed_messages() %}
+        <h3 class="message">{{ message }}</h3>
+    {% endfor %}
 </div>
 <footer>
     <a href="https://www.utsc.utoronto.ca/cms/faculty-of-computer-science">

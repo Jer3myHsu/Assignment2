@@ -9,7 +9,7 @@ label {
     margin: 0px 20px;
     font-size: 14pt;
 }
-#instructor_list {
+select {
     margin: 10px 20px 30px 20px;
     font-size: 14pt;
     color: #404040;

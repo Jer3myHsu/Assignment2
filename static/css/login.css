@@ -19,7 +19,7 @@ form {
     display: block;
     position: relative;
     padding-left: 35px;
-    margin: 0px 20px;
+    margin: 10px 20px;
     cursor: pointer;
     font-size: 18px;
     -webkit-user-select: none;
@@ -72,7 +72,7 @@ form {
     transform: rotate(45deg);
 }
 input {
-    margin: 0px 20px;
+    margin: 10px 20px;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 14pt;
 }
