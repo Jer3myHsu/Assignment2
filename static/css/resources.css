@@ -1,0 +1,15 @@
+@import url("main.css");
+/*Table*/
+.table {
+    font-size: 14pt;
+    width: 100%;
+    display: table;
+}
+.row {
+    display: table-row;
+}
+.cell {
+    display: table-cell;
+    padding: 3px 0px;
+}
+/*Table*/
