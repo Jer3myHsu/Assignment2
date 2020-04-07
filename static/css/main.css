@@ -129,6 +129,10 @@ h2 {
     font-size: 20pt;
     border-bottom: 2px lightskyblue solid;
 }
+label {
+    margin: 0px 20px;
+    font-size: 14pt;
+}
 .description {
     font-size: 14pt;
 }
@@ -163,7 +167,7 @@ button:hover {
 button:active {
     background-color: darkgray;
 }
-.flash_message {
+.flashMessage {
     margin: 0px 20px;
     font-size: 14pt;
     border-radius: 2px;

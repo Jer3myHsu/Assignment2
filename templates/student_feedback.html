@@ -32,16 +32,20 @@
     <h2>Feedback</h2>
     <form method="POST">
         <div class="text">
-            <label class="text">Choose Instructor: </label>
+            <label>Choose Instructor: </label>
             <select id="instructor_list" name="instructor_list">
                 {% for item in instructor %}
-                <option class="dropdown_item" value="{{ item['username'] }}">{{ item['name'] }}</option>
+                <option value="{{ item['username'] }}">{{ item['name'] }}</option>
                 {% endfor %}
             </select>
-            <textarea rows="3" placeholder="What do you like about the instructor teaching?" name="q_a"></textarea>
-            <textarea rows="3" placeholder="What do you recommend the instructor to do to improve their teaching?" name="q_b"></textarea>
-            <textarea rows="3" placeholder="What do you like about the labs?" name="q_c"></textarea>
-            <textarea rows="3" placeholder="What do you recommend the lab instructors to do to improve their lab teaching?" name="q_d"></textarea>
+            <label>What do you like about the instructor teaching?</label>
+            <textarea rows="3" name="q_a"></textarea>
+            <label>What do you recommend the instructor to do to improve their teaching?</label>
+            <textarea rows="3" name="q_b"></textarea>
+            <label>What do you like about the labs?</label>
+            <textarea rows="3" name="q_c"></textarea>
+            <label>What do you recommend the lab instructors to do to improve their lab teaching?</label>
+            <textarea rows="3" name="q_d"></textarea>
             <label class="container">
                 <input type="checkbox" name="email_checkbox">Include my Email
                 <span class="checkmark"></span>
@@ -50,7 +54,7 @@
     <button>Submit</button>
     </form>
     {% for message in get_flashed_messages() %}
-        <h3 class="flash_message">{{ message }}</h3>
+        <h3 class="flashMessage">{{ message }}</h3>
     {% endfor %}
 </div>
 <footer>

@@ -10,24 +10,32 @@
 </head>
 <body>
 <div class="content">
-    <h2>CSCB20: Login</h2>
+    <h2>CSCB20: Sign Up</h2>
     <form method="POST">
-        <input type="text" placeholder="Email" name="email">
-        <input type="text" placeholder="Name" name="name">
-        <input type="text" placeholder="Username" name="username">
-        <div class="password">
-            <input type="password" placeholder="Password" name="password">
-            <input type="password" placeholder="Confirm Password" name="confirm_password">
+        <label>Email:</label>
+        <input type="text" name="email">
+        <label>Name:</label>
+        <input type="text" name="name">
+        <label>Username:</label>
+        <input type="text" name="username">
+        <div class="passwordBox">
+            <div class="passwordField">
+                <label>Password:</label>
+                <input type="password" name="password">
+            </div>
+            <div class="passwordField">
+                <label>Confirm Password:</label>
+                <input type="password" name="confirm_password">
+            </div>
         </div>
-        
         <!--Checkbox from https://www.w3schools.com/howto/howto_css_custom_checkbox.asp-->
         <label class="container">
             <input type="checkbox" name="checkbox">I'm an Instructor
             <span class="checkmark"></span>
         </label>
         <select class="role" name="role">
-            <option class="dropdown_item" value="Teaching Assistant">Teaching Assistant</option>
-            <option class="dropdown_item" value="Instructor">Instructor</option>
+            <option value="Teaching Assistant">Teaching Assistant</option>
+            <option value="Instructor">Instructor</option>
         </select>
         <button>Sign up</button>
     </form>

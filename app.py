@@ -65,6 +65,12 @@ def signup_page():
         if user:
             flash('\U000026D4 Username is taken')
             error = True
+        if email == '':
+            flash('\U000026D4 Email cannot be empty')
+            error = True
+        if name == '':
+            flash('\U000026D4 Name cannot be empty')
+            error = True
         if username == '':
             flash('\U000026D4 Username cannot be empty')
             error = True
@@ -155,6 +161,8 @@ def feedback_page():
             for feedback in query_db("select * from Feedback F, Instructor I where F.username == I.username\
                 and I.username == '{}'".format(session['username'])):
                 feedbacks.append(feedback)
+            if feedbacks == []:
+                flash('No Feedback...')
             db.close()
             return render_template('instructor_feedback.html', feedback=feedbacks)
         else:

@@ -42,7 +42,7 @@
             <div class="cell">{{ item['q_d'] }}</div>
         </div>
         {% endfor %}
-        </div>    
+        </div>
     <div class="mobileTable">
         <div class="heading">
             <div class="cell">Email</div>
@@ -85,6 +85,10 @@
         </div>
         {% endfor %}
     </div>
+    <br>
+    {% for message in get_flashed_messages() %}
+        <h3 class="flashMessage">{{ message }}</h3>
+    {% endfor %}
 </div>
 <footer>
     <a href="https://www.utsc.utoronto.ca/cms/faculty-of-computer-science">
