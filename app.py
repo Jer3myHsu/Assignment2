@@ -293,16 +293,24 @@ def remark_page():
                 return render_template('instructor_remark.html', remark=remarks)
         else:
             if request.method == 'POST':
+                error = False
                 username = session.get('username')
                 assignment = request.form['assignment']
                 reason = request.form['reason']
                 db = get_db()
                 db.row_factory = make_dicts
-                query_db("insert into Remark (username, assignment, reason)\
-                values ('{}','{}','{}')".format(username, assignment, reason))
-                db.commit()
-                db.close()
-                return redirect('/grades')
+                exist = query_db("select * from Grades where assignment == '{}'".format(assignment), one=True)
+                if not exist:
+                    flash('''\U000026D4 Assignment doesn't exist''')
+                    error = True
+                    return check_login('student_remark.html')
+                else:
+                    query_db("insert into Remark (username, assignment, reason)\
+                    values ('{}','{}','{}')".format(username, assignment, reason))
+                    db.commit()
+                    db.close()
+                flash('Submitted Successfully!')
+                return redirect('remark')
             else:
                 return check_login('student_remark.html')    
     else:

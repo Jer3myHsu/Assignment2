@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="static/css/table.css"/>
+    <link rel="stylesheet" href="static/css/student_feedback.css"/>
     <link rel="icon" href="static/images/favicon.png">
 	<title>CSCB20: Remark</title>
 </head>
@@ -31,14 +31,14 @@
     <h2>Remark</h2>
     <form method="POST">
     <div class="text">
-        <input type="text" placeholder="Assignment" name="assignment">
+        <textarea rows="1" placeholder="Assignment" name="assignment"></textarea>
         <textarea rows="10" placeholder="Question/Reason" name="reason"></textarea>
     </div>
-    {% for message in get_flashed_messages() %}
-        <h3 class="message">{{ message }}</h3>
-    {% endfor %}
     <button>Submit</button>
     </form>
+    {% for message in get_flashed_messages() %}
+        <h3 class="flash_message">{{ message }}</h3>
+    {% endfor %}
 </div>
 <footer>
     <a href="https://www.utsc.utoronto.ca/cms/faculty-of-computer-science">
