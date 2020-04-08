@@ -4,40 +4,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="static/css/index.css"/>
     <link rel="icon" href="static/images/favicon.png">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="static/js/navigation.js"></script>
+    <script src="static/js/loadNav.js"></script>
+    <script src="static/js/loadFooter.js"></script>
+    <!-- This <script> is to prevent transition effect from occuring on load up
+        Find out more here
+        https://stackoverflow.com/questions/14389566/stop-css-transition-from-firing-on-page-load -->
+    <script> </script>
 	<title>CSCB20</title>
 </head>
 <body>
-<div id="navigation">
-    <label id="logo">CSCB20</label><!--This is a space so menu can be aligned-->
-    <label id="menuButton" for="checkbox"><img src="static/images/menu.svg" alt="Menu"></label>
-    <input type="checkbox" id="checkbox"></input>
-    <ul id="menu">
-        <li><a href="/">Home</a></li>
-        <li><a href="team">Course Team</a></li>
-        <li><a href="calendar">Calendar</a></li>
-        <li><a href="lectures">Lectures</a></li>
-        <li><a href="labs">Labs</a></li>
-        <li><a href="assignment">Assignments</a></li>
-        <li><a href="https://piazza.com/mail.utoronto.ca/">Piazza</a></li>
-        <li><a href="https://markus.utsc.utoronto.ca/cscb20w20">Markus</a></li>
-        <li><a href="resources">Resources</a></li>
-    </ul>
-    <!--Modified from https://www.w3schools.com/howto/howto_js_dropdown.asp-->
-    <div class="dropdown">
-        <button onclick="openMenu()" id="userButton">
-            <img class="account" src="static/images/account.svg"/>
-            {% for item in name %}
-                {{ item['name'] }}
-            {% endfor %}
-        </button>
-        <div id="dropdown" class="dropdownList">
-            <a class="dropdownItem" href="grades">Grades</a>
-            <a class="dropdownItem" href="feedback">Feedback</a>
-            <a class="dropdownItem" href="logout">Log out</a>
-        </div>
-    </div>
-</div>
+<div id="navigation"></div>
 <div class="content">
     <h1>CSCB20 - Introduction to Databases and Web Applications</h1>
     <h2>Course Description</h2>
@@ -83,16 +61,6 @@
         </div>
     </div>
 </div>
-<footer>
-    <a href="https://www.utsc.utoronto.ca/cms/faculty-of-computer-science">
-        Faculty of Computer Science at U of T
-    </a>
-    <br>
-    Site design by Chi Jian Hsu & Philip Kattathara
-</footer>
-<!-- This <script> is to prevent transition effect from occuring on load up
-    Find out more here
-    https://stackoverflow.com/questions/14389566/stop-css-transition-from-firing-on-page-load -->
-<script> </script>
+<footer></footer>
 </body>
 </html>

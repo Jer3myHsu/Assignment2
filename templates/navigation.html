@@ -1,16 +1,28 @@
-<div id="navigation"></div>
-    <label id="menuButton" for="checkbox"><img src="static/images/menu.svg" alt="Menu"></label>
-    <input type="checkbox" id="checkbox"></input>
-    <ul id="menu">
-        <li><a href="/">Home</a></li>
-        <li><a href="team">Course Team</a></li>
-        <li><a href="calendar">Calendar</a></li>
-        <li><a href="lectures">Lectures</a></li>
-        <li><a href="labs">Labs</a></li>
-        <li><a href="assignment">Assignments</a></li>
-        <li><a href="https://piazza.com/mail.utoronto.ca/">Piazza</a></li>
-        <li><a href="https://markus.utsc.utoronto.ca/cscb20w20">Markus</a></li>
-        <li><a href="resources">Resources</a></li>
-        <li><a href="feedback">Feedback</a></li>
-    </ul>
+<label id="logo">CSCB20</label><!--This is a space so menu can be aligned-->
+<label id="menuButton" for="checkbox"><img src="static/images/menu.svg" alt="Menu"></label>
+<input type="checkbox" id="checkbox"></input>
+<ul id="menu">
+    <li><a href="/">Home</a></li>
+    <li><a href="team">Course Team</a></li>
+    <li><a href="calendar">Calendar</a></li>
+    <li><a href="lectures">Lectures</a></li>
+    <li><a href="labs">Labs</a></li>
+    <li><a href="assignment">Assignments</a></li>
+    <li><a href="https://piazza.com/mail.utoronto.ca/">Piazza</a></li>
+    <li><a href="https://markus.utsc.utoronto.ca/cscb20w20">Markus</a></li>
+    <li><a href="resources">Resources</a></li>
+</ul>
+<!--Modified from https://www.w3schools.com/howto/howto_js_dropdown.asp-->
+<div class="dropdown">
+    <button onclick="openMenu()" id="userButton">
+        <img class="account" src="static/images/account.svg"/>
+        {% for item in name %}
+            {{ item['name'] }}
+        {% endfor %}
+    </button>
+    <div id="dropdown" class="dropdownList">
+        <a class="dropdownItem" href="grades">Grades</a>
+        <a class="dropdownItem" href="feedback">Feedback</a>
+        <a class="dropdownItem" href="logout">Log out</a>
+    </div>
 </div>

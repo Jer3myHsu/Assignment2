@@ -54,6 +54,14 @@ def get_name():
 def check_login(page):
     return render_template(page, name=get_name()) if 'username' in session else redirect('/login')
 
+@app.route('/navigation')
+def navigation():
+    return check_login('navigation.html')
+
+@app.route('/footer')
+def footer():
+    return check_login('footer.html')
+
 @app.route('/signup', methods=['GET', 'POST'])
 def signup_page():
     if request.method == 'POST':
