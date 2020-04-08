@@ -231,21 +231,34 @@ def grades_page():
     if 'username' in session:
         if session['type'] == 'instructor':
             if request.method == 'POST':
-                name = request.form['name']
+                #name = request.form['name']
+                addname = request.form['addname']
+                addassignment = request.form['addassignment']
+                addgrade = request.form['addgrade']
                 db = get_db()
                 db.row_factory = make_dicts
                 grades = []
-                if name.strip() == '':
-                    for grade in query_db('select * from Grades G, Student S where G.username == S.username'):
-                        grades.append(grade)
-                    db.close()
-                    return render_template('instructor_grades.html', grade=grades)
-                else:    
-                    for grade in query_db('''select * from Grades G, Student S where G.username == S.username and
-                        S.name == '{}' '''.format(name)):
-                        grades.append(grade)
-                    db.close()
-                    return render_template('instructor_grades.html', grade=grades)
+                for grade in query_db('select * from Grades G, Student S where G.username == S.username'):
+                    grades.append(grade)
+                checkname = query_db("select username from Student where name == '{}'".format(addname), one=True)
+                if not checkname:
+                    flash("No Student with Name {}".format(addname))
+                    return redirect('/grades')
+                else:
+                    username = query_db("select username from Student where name == '{}'".format(addname), one=True)['username']
+                check = query_db("select * from Grades where username == '{}' and assignment == '{}'".format(username, addassignment), one=True)
+                if check:
+                    query_db("update Grades set grade = '{}' where username == '{}' and assignment == '{}' ".format(addgrade, username, addassignment))
+                    db.commit()   
+                else:
+                    query_db("insert into Grades(username, assignment, grade)\
+                        values ('{}','{}','{}') ".format(username, addassignment, addgrade))
+                    db.commit()
+                grades = []
+                for grade in query_db('select * from Grades G, Student S where G.username == S.username'):
+                    grades.append(grade)
+                db.close()
+                return render_template('instructor_grades.html', grade=grades)
             else:
                 db = get_db()
                 db.row_factory = make_dicts
@@ -254,6 +267,7 @@ def grades_page():
                     grades.append(grade)
                 db.close()
                 return render_template('instructor_grades.html', grade=grades)
+                
         else:
             db = get_db()
             db.row_factory = make_dicts
