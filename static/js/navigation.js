@@ -5,6 +5,7 @@ function openNavMenu() {
 function openAccountMenu() {
   document.getElementById("accountMenu").classList.toggle("show");
 }
+
 function closeDropDown(menu) {
   var dropdowns = document.getElementsByClassName(menu);
     var i;
@@ -15,6 +16,7 @@ function closeDropDown(menu) {
       }
     }
 }
+
 // Close the dropdown if the user clicks outside of it
 window.onclick = function(event) {
   if (!event.target.matches('#userButton')) {
@@ -24,6 +26,7 @@ window.onclick = function(event) {
     this.closeDropDown("navDropList");
   }
 }
+
 window.onresize = function(event) {
   if (window.innerWidth >= 1350) {
     this.closeDropDown("navDropList");

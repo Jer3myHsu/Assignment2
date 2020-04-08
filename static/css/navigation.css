@@ -43,12 +43,14 @@
     padding: 0px;
     margin: 0px;
     display: flex;
-    visibility: visible;
     flex-direction: row;
     justify-content: space-between;
     background-color: #404040;
     width: 100%;
     align-items: stretch;
+    position: fixed;
+    top: 0;
+    z-index : 1;
 }
 @media (min-width: 0px) {
     #logo {
@@ -142,4 +144,7 @@
 }
 .show {
     display: block;
+}
+.content {
+    margin-top: 50px;
 }
