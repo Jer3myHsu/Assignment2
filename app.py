@@ -305,13 +305,16 @@ def remark_page():
                 db.row_factory = make_dicts
                 remarks = []
                 if name.strip() == '':
-                    for remark in query_db('select * from Remark R, Student S where R.username == S.username'):
+                    for remark in query_db('select reason, name, assignment from\
+                        (select * from Remark R, Grades G where R.grade_id == G.id) A, Student S\
+                        where A.username == S.username'):
                         remarks.append(remark)
                     db.close()
                     return render_template('instructor_remark.html', remark=remarks)
                 else:    
-                    for remark in query_db('''select * from Remark R, Student S where R.username == S.username and
-                        S.name == '{}' '''.format(name)):
+                    for remark in query_db('''select reason, name, assignment from\
+                        (select * from Remark R, Grades G where R.grade_id == G.id) A, Student S\
+                        where A.username == S.username and S.name == '{}' '''.format(name)):
                         remarks.append(remark)
                     db.close()
                     return render_template('instructor_remark.html', remark=remarks)
@@ -319,32 +322,38 @@ def remark_page():
                 db = get_db()
                 db.row_factory = make_dicts
                 remarks = []
-                for remark in query_db('select * from Remark R, Student S where R.username == S.username'):
+                for remark in query_db('select reason, name, assignment from\
+                        (select * from Remark R, Grades G where R.grade_id == G.id) A, Student S\
+                        where A.username == S.username'):
                     remarks.append(remark)
                 db.close()
                 return render_template('instructor_remark.html', remark=remarks)
         else:
+            db = get_db()
+            db.row_factory = make_dicts
             if request.method == 'POST':
-                error = False
-                username = session.get('username')
-                assignment = request.form['assignment']
+                grade_id = request.form['grade_id']
                 reason = request.form['reason']
-                db = get_db()
-                db.row_factory = make_dicts
-                exist = query_db("select * from Grades where assignment == '{}'".format(assignment), one=True)
-                if not exist:
-                    flash('''\U000026D4 Assignment doesn't exist''')
-                    error = True
-                    return check_login('student_remark.html')
-                else:
-                    query_db("insert into Remark (username, assignment, reason)\
-                    values ('{}','{}','{}')".format(username, assignment, reason))
-                    db.commit()
-                    db.close()
+                if grade_id == 'None':
+                    flash("Assignment doesn't exist")
+                    return redirect('remark')
+                if reason.strip() == '':
+                    flash("You have not entered a reason for your remark")
+                    return redirect('remark')
+                query_db("insert into Remark (grade_id, reason)\
+                values ('{}','{}')".format(grade_id, reason))
+                db.commit()
+                db.close()
                 flash('Submitted Successfully!')
                 return redirect('remark')
             else:
-                return check_login('student_remark.html')    
+                assignments = []
+                for assignment in query_db("select * from Grades where username == '{}'".format(session['username'])):
+                    assignments.append(assignment)
+                db.close()
+                if assignments == []:
+                    assignments.append({'id': None, 'assignment': 'You have no assignments that can be remarked'})
+                return render_template('student_remark.html', assignment=assignments)    
     else:
         return redirect('/login')
 

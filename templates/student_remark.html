@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="static/css/student_feedback.css"/>
+    <link rel="stylesheet" href="static/css/student_remark.css"/>
     <link rel="icon" href="static/images/favicon.png">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="static/js/navigation.js"></script>
@@ -13,21 +13,6 @@
 </head>
 <body>
 <div id="navigation"></div>
-    <label id="menuButton" for="checkbox"><img src="static/images/menu.svg" alt="Menu"></label>
-    <input type="checkbox" id="checkbox"></input>
-    <ul id="menu">
-        <li><a href="/">Home</a></li>
-        <li><a href="team">Course Team</a></li>
-        <li><a href="calendar">Calendar</a></li>
-        <li><a href="lectures">Lectures</a></li>
-        <li><a href="labs">Labs</a></li>
-        <li><a href="assignment">Assignments</a></li>
-        <li><a href="https://piazza.com/mail.utoronto.ca/">Piazza</a></li>
-        <li><a href="https://markus.utsc.utoronto.ca/cscb20w20">Markus</a></li>
-        <li><a href="resources">Resources</a></li>
-        <li><a href="feedback">Feedback</a></li>
-    </ul>
-</div>
 <div class="content">
     <h1>Remark Request</h1>
     <p class="description">
@@ -36,13 +21,19 @@
     <h2>Remark</h2>
     <form method="POST">
     <div class="text">
-        <textarea rows="1" placeholder="Assignment" name="assignment"></textarea>
-        <textarea rows="10" placeholder="Question/Reason" name="reason"></textarea>
+        <label>Assignment:</label>
+        <select id="grade_id" name="grade_id">
+            {% for item in assignment %}
+            <option value="{{ item['id'] }}">{{ item['assignment'] }}</option>
+            {% endfor %}
+        </select>
+        <label>Question/Reason:</label>
+        <textarea rows="10" name="reason"></textarea>
     </div>
     <button>Submit</button>
     </form>
     {% for message in get_flashed_messages() %}
-        <h3 class="flash_message">{{ message }}</h3>
+        <h3 class="flashMessage">{{ message }}</h3>
     {% endfor %}
 </div>
 <footer></footer>
