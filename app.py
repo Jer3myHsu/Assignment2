@@ -275,6 +275,8 @@ def grades_page():
             for grade in query_db('''select * from  Grades G, Student S where G.username == S.username
                 and G.username == '{}' '''.format(session['username'])):
                 grades.append(grade)
+            if grades == []:
+                flash('No grade available yet...')
             db.close()
             return render_template('student_grades.html', grade=grades)
     else:

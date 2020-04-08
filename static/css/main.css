@@ -23,7 +23,7 @@ body {
         display: table;
     }
 }
-@media (min-width: 1200px) {
+@media (min-width: 1000px) {
     .table {
         display: table;
         min-width: 1000px;
@@ -82,7 +82,7 @@ button:active {
     background-color: darkgray;
 }
 .flashMessage {
-    margin: 0px 20px;
+    margin: 30px 20px;
     font-size: 14pt;
     border-radius: 2px;
     text-align: center;
