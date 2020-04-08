@@ -6,13 +6,15 @@
     margin: 0px;
     color: white;
 }
-#menu {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
+#navMenu {
     margin: 0px;
+    padding: 0px;
 }
-#navigation a, #userButton {
+#accountMenu {
+    margin: 0px;
+    padding: 0px;
+}
+#navigation a, #userButton, #navButton {
     display: block;
     color: white;
     transition:
@@ -20,80 +22,102 @@
     background: none;
     text-decoration: none;
 }
-#userButton {
+#userButton, #navButton {
     border-radius: 0px;
     font-size: 16pt;
     padding: 8px 20px;
     outline: none;
     margin: 0px;
+    height: 100%;
 }
-#menu a:hover, #userButton:hover, .dropdown a:hover {
+#navButton:hover, #navMenu a:hover, #userButton:hover, #accountMenu a:hover {
     background-color: lightskyblue;
 }
-#menu a:active {
+#navMenu a:active, #accountMenu a:active {
     background-color: grey;
 }
-#navigation li {
+#navigation li, #dropdown li {
     list-style-type: none;
 }
 #navigation {
     padding: 0px;
     margin: 0px;
+    display: flex;
+    visibility: visible;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: #404040;
+    width: 100%;
+    align-items: stretch;
 }
 @media (min-width: 0px) {
-    #navigation {
-        display: none;
-        flex-direction: column;
-        background-color: grey;
-        width: 100%;
+    #logo {
+        order: 2;
+    }
+    .leftDropdown {
+        order: 1;
     }
     #navigation a {
-        align-self: stretch;
         font-size: 14pt;
         padding: 5px 15px;
     }
-    #menuButton {
-        cursor: pointer;
-        align-self: stretch;
-        background-color: #404040;
-        padding: 10px;
+    .accDropList {
+        min-width: 100vw;
     }
-    #checkbox:checked + #menu {
-        display: flex;
+    .navDropList {
+        display: none;
+        position: absolute;
+        background-color: grey;
+        min-width: 100vw;
+        left: 0%;
+        overflow: auto;
+        text-decoration: none;
     }
 }
-@media (min-width: 1100px) {
-    #navigation {
-        display: flex;
-        visibility: visible;
-        flex-direction: row;
-        justify-content: center;
-        background-color: #404040;
-        width: 100%;
+@media (min-width: 900px) {
+    #logo {
+        order: 2;
+    }
+    .leftDropdown {
+        order: 1;
     }
     #navigation a {
         font-size: 14pt;
         padding: 8px 20px;
     }
-    #menuButton {
+    .accDropList {
+        min-width: 180px;
+    }
+    .navDropList {
         display: none;
+        position: absolute;
+        background-color: grey;
+        min-width: 180px;
+        left: 0%;
+        overflow: auto;
+        text-decoration: none;
     }
 }
-@media (min-width: 1200px) {
-    #navigation {
-        display: flex;
-        visibility: visible;
-        flex-direction: row;
-        justify-content: space-between;
-        background-color: #404040;
-        width: 100%;
+@media (min-width: 1350px) {
+    #logo {
+        order: 1;
+    }
+    .leftDropdown {
+        order: 2;
     }
     #navigation a {
         font-size: 16pt;
         padding: 8px 20px;
     }
-    #menuButton {
+    #navButton {
         display: none;
+    }
+    .navDropList {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        position: relative;
+        background-color: inherit;
     }
 }
 .account {
@@ -101,22 +125,20 @@
     vertical-align: middle;
     width: 24px;
 }
-.dropdown {
+.rightDropdown {
+    order: 3;
+}
+.rightDropdown, .leftDropdown {
     position: relative;
     display: inline-block;
 }
-.dropdownList {
+.accDropList {
     display: none;
     position: absolute;
     background-color: grey;
-    min-width: 180px;
     right: 0%;
     overflow: auto;
     text-decoration: none;
-}
-.dropdownItem {
-    text-decoration: none;
-    display: block;
 }
 .show {
     display: block;
