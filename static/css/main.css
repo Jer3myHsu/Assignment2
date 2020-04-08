@@ -18,48 +18,7 @@ body {
 #checkbox {
     display: none;
 }
-#menu a {
-    display: block;
-    color: white;
-    transition:
-        background-color 0.3s ease-in-out 0s,
-        color 0.3s ease-in-out 0s;
-    background: none;
-    text-decoration: none;
-}
-#menu a:hover {
-    background-color: lightskyblue;
-    color: black;
-}
-#menu a:active {
-    background-color: white;
-    color: black;
-}
-#menu li {
-    list-style-type: none;
-}
-#menu {
-    padding: 0px;
-    margin: 0px;
-}
 @media (min-width: 0px) {
-    #menu {
-        display: none;
-        flex-direction: column;
-        background-color: #555555;
-        width: 100%;
-    }
-    #menu a {
-        align-self: stretch;
-        font-size: 14pt;
-        padding: 5px 15px;
-    }
-    #menuButton {
-        cursor: pointer;
-        align-self: stretch;
-        background-color: #404040;
-        padding: 10px;
-    }
     #checkbox:checked + #menu {
         display: flex;
     }
@@ -71,21 +30,6 @@ body {
     }
 }
 @media (min-width: 1100px) {
-    #menu {
-        display: flex;
-        visibility: visible;
-        flex-direction: row;
-        justify-content: center;
-        background-color: #404040;
-        width: 100%;
-    }
-    #menu a {
-        font-size: 14pt;
-        padding: 8px 20px;
-    }
-    #menuButton {
-        display: none;
-    }
     .table {
         display: table;
         min-width: 1000px;
@@ -95,21 +39,6 @@ body {
     }
 }
 @media (min-width: 1200px) {
-    #menu {
-        display: flex;
-        visibility: visible;
-        flex-direction: row;
-        justify-content: center;
-        background-color: #404040;
-        width: 100%;
-    }
-    #menu a {
-        font-size: 16pt;
-        padding: 8px 20px;
-    }
-    #menuButton {
-        display: none;
-    }
     .table {
         display: table;
         min-width: 1000px;
@@ -174,21 +103,4 @@ button:active {
     text-align: center;
     border: solid palegreen;
     background-color: palegreen;
-}
-footer {
-    text-align: center;
-    color: gray;
-    padding: 10px;
-    margin-top: auto;
-}
-footer a {
-    transition: color 0.3s ease-in-out 0s;
-    text-decoration: none;
-    color: gray;
-}
-footer a:hover {
-    color: darkgray;
-}
-footer a:active {
-    color: white;
 }

@@ -1,4 +1,6 @@
 @import url("table.css");
+@import url("navigation.css");
+@import url("footer.css");
 
 hr {
     border-top: 2px lightskyblue solid;

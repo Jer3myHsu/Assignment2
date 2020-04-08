@@ -43,8 +43,16 @@ def is_safe_url(target):
     return test_url.scheme in ('http', 'https') and \
            ref_url.netloc == test_url.netloc
 
+def get_name():
+    db = get_db()
+    db.row_factory = make_dicts
+    name = query_db("select name from Instructor where username == '{}'\
+        union select name from Student where username == '{}'".format(session['username'] , session['username']), one=True)
+    db.close()
+    return [name]
+
 def check_login(page):
-    return render_template(page) if 'username' in session else redirect('/login')
+    return render_template(page, name=get_name()) if 'username' in session else redirect('/login')
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup_page():

@@ -4,10 +4,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="static/css/index.css"/>
     <link rel="icon" href="static/images/favicon.png">
+    <script src="static/js/navigation.js"></script>
 	<title>CSCB20</title>
 </head>
 <body>
-<div id="navigation"></div>
+<div id="navigation">
+    <label id="logo">CSCB20</label><!--This is a space so menu can be aligned-->
     <label id="menuButton" for="checkbox"><img src="static/images/menu.svg" alt="Menu"></label>
     <input type="checkbox" id="checkbox"></input>
     <ul id="menu">
@@ -21,6 +23,20 @@
         <li><a href="https://markus.utsc.utoronto.ca/cscb20w20">Markus</a></li>
         <li><a href="resources">Resources</a></li>
     </ul>
+    <!--Modified from https://www.w3schools.com/howto/howto_js_dropdown.asp-->
+    <div class="dropdown">
+        <button onclick="openMenu()" id="userButton">
+            <img class="account" src="static/images/account.svg"/>
+            {% for item in name %}
+                {{ item['name'] }}
+            {% endfor %}
+        </button>
+        <div id="dropdown" class="dropdownList">
+            <a class="dropdownItem" href="grades">Grades</a>
+            <a class="dropdownItem" href="feedback">Feedback</a>
+            <a class="dropdownItem" href="logout">Log out</a>
+        </div>
+    </div>
 </div>
 <div class="content">
     <h1>CSCB20 - Introduction to Databases and Web Applications</h1>
