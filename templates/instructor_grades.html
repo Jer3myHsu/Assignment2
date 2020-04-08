@@ -8,6 +8,7 @@
     <script src="static/js/navigation.js"></script>
     <script src="static/js/loadNav.js"></script>
     <script src="static/js/loadFooter.js"></script>
+    <script src="static/js/addGrade.js"></script>
     <script> </script>
     <title>CSCB20: Grades</title>
 </head>
@@ -28,14 +29,24 @@
             <div class="cell">{{ item['grade'] }}</div>
         </div>
         {% endfor %}
-        <form method="POST">
-        <div class="text">
-        <br>Search a Name<br>
-        <input type="text" placeholder="Name" name="name">
-    </div>
-    <button>Submit</button>
+
+    <button class="open-button" onclick="openForm()">Add/Update Grade</button>
+    <div class="form-popup" id="myForm">
+    <form method="POST" class="form-container">
+        <h1>Add/Update Grade</h1>
+        <label for="Student Name"><b>Name</b></label>
+        <input type="text" placeholder="Enter Name" name="addname" required>
+        <label for="Assignment"><b>Assignment</b></label>
+        <input type="text" placeholder="Enter Assignment" name="addassignment" required>
+        <label for="Grade"><b>Grade</b></label>
+        <input type="text" placeholder="Enter Grade" name="addgrade" required>
+        <button type="submit" class="btn">Submit</button>
+        <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
     </form>
-        </div>    
+    </div>
+    {% for message in get_flashed_messages() %}
+        <h3 class="flashMessage">{{ message }}</h3>
+    {% endfor %}
     <div class="mobileTable">
         <div class="heading">
             <div class="cell">Student Name</div>
@@ -49,14 +60,23 @@
             <div class="cell">{{ item['grade'] }}</div>
         </div>
         {% endfor %}
-        <form method="POST">
-        <div class="text">
-        <br>Search a Name<br>
-        <input type="text" placeholder="Name" name="name">
-    </div>
-    <button>Submit</button>
+    <button class="open-button" onclick="openForm()">Add/Update Grade</button>
+    <div class="form-popup" id="myForm">
+    <form method="POST" class="form-container">
+        <h1>Add/Update Grade</h1>
+        <label for="Student Name"><b>Name</b></label>
+        <input type="text" placeholder="Enter Name" name="addname" required>
+        <label for="Assignment"><b>Assignment</b></label>
+        <input type="text" placeholder="Enter Assignment" name="addassignment" required>
+        <label for="Grade"><b>Grade</b></label>
+        <input type="text" placeholder="Enter Grade" name="addgrade" required>
+        <button type="submit" class="btn">Submit</button>
+        <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
     </form>
     </div>
+    {% for message in get_flashed_messages() %}
+        <h3 class="flashMessage">{{ message }}</h3>
+    {% endfor %}
 </div>
 <footer></footer>
 </body>
