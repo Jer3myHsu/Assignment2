@@ -1,6 +1,5 @@
 import sqlite3
 from flask import Flask, render_template, request, g, make_response, redirect, session, flash
-from urllib.parse import urlparse, urljoin
 
 DATABASE = "./assignment3.db"
 STRING_LIMIT = 30
