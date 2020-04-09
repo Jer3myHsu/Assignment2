@@ -165,7 +165,7 @@ def logout():
 
 @app.route('/')
 def root():
-    return render_template('index.html')
+    return check_login('index.html')
 
 @app.route('/assignment')
 def assignment_page():
@@ -370,4 +370,4 @@ def incorrect_url(incorrect):
     return redirect('/')
 
 if __name__ == '__main__':
-    app.run(debug=True)#,host='0.0.0.0')
+    app.run(debug=True,host='0.0.0.0')
