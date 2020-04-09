@@ -1,3 +1,3 @@
 $(function(){
-    $("#navigation").load("navigation");
+    $("footer").load("footer");
 });

@@ -8,7 +8,7 @@ import sys ### THIS IS FOR DEBUGGING. REMOVE
 DATABASE = "./assignment3.db"
 STRING_LIMIT = 30
 app = Flask(__name__)
-app.config['SECRET_KEY'] = '1jhhgf'
+app.config['SECRET_KEY'] = 'vN0JyIeUzvGi6VYMgmtdUqNkf6XzUEdx'
 app.config['USE_SESSION_FOR_NEXT'] = True
 
 # From https://flask.palletsprojects.com/en/1.1.x/patterns/sqlite3/
@@ -64,11 +64,11 @@ def check_login(page):
 
 @app.route('/navigation')
 def navigation():
-    return render_template('navigation.html', name=get_name(), list=get_account_items()) if 'username' in session else redirect('/login')
+    return render_template('navigation.html', name=get_name(), list=get_account_items()) if 'username' in session else ''
 
 @app.route('/footer')
 def footer():
-    return check_login('footer.html')
+    return render_template('footer.html')
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup_page():
@@ -186,7 +186,7 @@ def feedback_page():
                 and I.username == '{}'".format(session['username'])):
                 feedbacks.append(feedback)
             if feedbacks == []:
-                flash('No Feedback...')
+                flash('You have no Feedback...')
             db.close()
             return render_template('instructor_feedback.html', feedback=feedbacks)
         else:
@@ -284,7 +284,7 @@ def grades_page():
                 and G.username == '{}' '''.format(session['username'])):
                 grades.append(grade)
             if grades == []:
-                flash('No grade available yet...')
+                flash('No grades available yet...')
             db.close()
             return render_template('student_grades.html', grade=grades)
     else:
@@ -360,14 +360,14 @@ def remark_page():
                     assignments.append(assignment)
                 db.close()
                 if assignments == []:
-                    assignments.append({'id': None, 'assignment': 'You have no assignments that can be remarked'})
+                    assignments.append({'id': None, 'assignment': 'No assignments found'})
                 return render_template('student_remark.html', assignment=assignments)    
     else:
         return redirect('/login')
 
 @app.route('/<incorrect>')
 def incorrect_url(incorrect):
-    return redirect('/')
+    return render_template('/not_found.html')
 
 if __name__ == '__main__':
-    app.run(debug=True,host='0.0.0.0')
+    app.run(debug=True)#,host='0.0.0.0')

@@ -23,14 +23,14 @@ body {
         display: table;
     }
 }
-@media (min-width: 1000px) {
+@media (min-width: 1000px) {.mobileTable {
+        display: none;
+    }
     .table {
         display: table;
         min-width: 1000px;
     }
-    .mobileTable {
-        display: none;
-    }
+    
 }
 h1 {
     display: flex;
