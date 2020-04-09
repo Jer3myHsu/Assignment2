@@ -24,13 +24,12 @@ body {
     }
 }
 @media (min-width: 1000px) {
-  .mobileTable {
+    .mobileTable {
         display: none;
     }
     .table {
         display: table;
         min-width: 1000px;
-    
 }
 h1 {
     display: flex;
