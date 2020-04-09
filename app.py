@@ -1,9 +1,6 @@
 import sqlite3
 from flask import Flask, render_template, request, g, make_response, redirect, session, flash
-#from flask_login import login_required, login_user, logout_user, current_user
 from urllib.parse import urlparse, urljoin
-
-import sys ### THIS IS FOR DEBUGGING. REMOVE
 
 DATABASE = "./assignment3.db"
 STRING_LIMIT = 30
@@ -36,12 +33,6 @@ def close_connection(exception):
     db = getattr(g, '_database', None)
     if db is not None:
         db.close()
-
-def is_safe_url(target):
-    ref_url = urlparse(request.host_url)
-    test_url = urlparse(urljoin(request.host_url, target))
-    return test_url.scheme in ('http', 'https') and \
-           ref_url.netloc == test_url.netloc
 
 def get_name():
     db = get_db()
@@ -87,7 +78,7 @@ def signup_page():
         else:
             user = query_db("select * from Student where username == '{}'".format(username), one=True)
         if user:
-            flash('\U000026D4 Username is taken')
+            flash('\U000026D4 Username is taken') # \U000026D4 is ⛔ (no entry emoji)
             error = True
         if email == '':
             flash('\U000026D4 Email cannot be empty')
@@ -136,7 +127,7 @@ def login_page():
         else:
             user = query_db("select * from Student where username == '{}'".format(username), one=True)
         if not user:
-            flash('\U000026D4 Incorrect username...') # \U000026D4 is ⛔ (no entry emoji)
+            flash('\U000026D4 Incorrect username...')
             return redirect('/login')
         if checkbox == 'on':
             user = query_db("select * from Instructor where username == '{}' and password == '{}'".format(username, password), one=True)
@@ -178,9 +169,9 @@ def calendar_page():
 @app.route('/feedback', methods=['GET', 'POST'])
 def feedback_page():
     if 'username' in session:
+        db = get_db()
+        db.row_factory = make_dicts
         if session['type'] == 'instructor':
-            db = get_db()
-            db.row_factory = make_dicts
             feedbacks = []
             for feedback in query_db("select * from Feedback F, Instructor I where F.username == I.username\
                 and I.username == '{}'".format(session['username'])):
@@ -190,8 +181,6 @@ def feedback_page():
             db.close()
             return render_template('instructor_feedback.html', feedback=feedbacks)
         else:
-            db = get_db()
-            db.row_factory = make_dicts
             if request.method == 'POST':
                 instructor = request.form['instructor_list']
                 q_a = request.form['q_a']
@@ -253,9 +242,11 @@ def grades_page():
                     if check:
                         query_db("update Grades set grade = '{}' where username == '{}'\
                             and assignment == '{}'".format(grade, username, assignment))
+                        flash('Grade Already Exist so it has been changed')
                     else:
                         query_db("insert into Grades(username, assignment, grade)\
                             values ('{}','{}','{}') ".format(username, assignment, grade))
+                        flash('Added Successfully!')
                     db.commit()
                 elif button == 'Update':
                     old_grades = query_db("select * from Grades")
@@ -268,6 +259,7 @@ def grades_page():
                         if new_grade != grade['grade']:
                             query_db("update Grades set grade = '{}' where id == '{}'".format(new_grade, grade['id']))
                             db.commit()
+                    flash('Updated Successfully!')
                 db.close()
                 return redirect('grades')
             else:
@@ -307,11 +299,11 @@ def team_page():
 @app.route('/remark', methods=['GET', 'POST'])
 def remark_page():
     if 'username' in session:
+        db = get_db()
+        db.row_factory = make_dicts
         if session['type'] == 'instructor':
             if request.method == 'POST':
                 name = request.form['name']
-                db = get_db()
-                db.row_factory = make_dicts
                 remarks = []
                 if name.strip() == '':
                     for remark in query_db('select reason, name, assignment from\
@@ -328,8 +320,6 @@ def remark_page():
                     db.close()
                     return render_template('instructor_remark.html', remark=remarks)
             else:
-                db = get_db()
-                db.row_factory = make_dicts
                 remarks = []
                 for remark in query_db('select reason, name, assignment from\
                         (select * from Remark R, Grades G where R.grade_id == G.id) A, Student S\
@@ -338,8 +328,6 @@ def remark_page():
                 db.close()
                 return render_template('instructor_remark.html', remark=remarks)
         else:
-            db = get_db()
-            db.row_factory = make_dicts
             if request.method == 'POST':
                 grade_id = request.form['grade_id']
                 reason = request.form['reason']
