@@ -88,13 +88,13 @@
         padding: 8px 20px;
     }
     .accDropList {
-        min-width: 180px;
+        min-width: max-content;
     }
     .navDropList {
         display: none;
         position: absolute;
         background-color: grey;
-        min-width: 180px;
+        min-width: max-content;
         left: 0%;
         overflow: auto;
         text-decoration: none;

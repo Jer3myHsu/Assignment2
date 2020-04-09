@@ -11,8 +11,8 @@
         <li><a href="lectures">Lectures</a></li>
         <li><a href="labs">Labs</a></li>
         <li><a href="assignment">Assignments</a></li>
-        <li><a href="https://piazza.com/mail.utoronto.ca/">Piazza</a></li>
-        <li><a href="https://markus.utsc.utoronto.ca/cscb20w20">Markus</a></li>
+        <li><a target="_blank" rel="noopener noreferrer" href="https://piazza.com/mail.utoronto.ca/">Piazza</a></li>
+        <li><a target="_blank" rel="noopener noreferrer" href="https://markus.utsc.utoronto.ca/cscb20w20">Markus</a></li>
         <li><a href="resources">Resources</a></li>
     </ul>
 </div>
@@ -24,8 +24,8 @@
         {% endfor %}
     </button>
     <ul id="accountMenu" class="accDropList">
-        <li><a href="grades">Grades</a></li>
-        <li><a href="feedback">Feedback</a></li>
-        <li><a href="logout">Log out</a></li>
+        {% for item in list %}
+        <li><a href="{{ item['link'] }}">{{ item['text'] }}</a></li>
+        {% endfor %}
     </ul>
 </div>

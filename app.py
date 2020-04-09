@@ -51,12 +51,20 @@ def get_name():
     db.close()
     return [name]
 
+def get_account_items():
+    if session['type'] == 'instructor':
+        return [{'link': 'grades', 'text': 'Student Grades'}, {'link': 'remark', 'text': 'Remark Requests'},
+            {'link': 'feedback', 'text': 'Your Feedback'}, {'link': 'logout', 'text': 'Log out'}]
+    else:
+        return [{'link': 'grades', 'text': 'Your Grades'}, {'link': 'remark', 'text': 'Request Remark'},
+            {'link': 'feedback', 'text': 'Feedback'}, {'link': 'logout', 'text': 'Log out'}]
+
 def check_login(page):
-    return render_template(page, name=get_name()) if 'username' in session else redirect('/login')
+    return render_template(page) if 'username' in session else redirect('/login')
 
 @app.route('/navigation')
 def navigation():
-    return check_login('navigation.html')
+    return render_template('navigation.html', name=get_name(), list=get_account_items()) if 'username' in session else redirect('/login')
 
 @app.route('/footer')
 def footer():
@@ -157,7 +165,7 @@ def logout():
 
 @app.route('/')
 def root():
-    return check_login('index.html')
+    return render_template('index.html')
 
 @app.route('/assignment')
 def assignment_page():
