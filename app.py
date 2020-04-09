@@ -365,9 +365,9 @@ def remark_page():
     else:
         return redirect('/login')
 
-@app.route('/<incorrect>')
+@app.errorhandler(404)
 def incorrect_url(incorrect):
-    return render_template('/not_found.html')
+    return render_template('/not_found.html'), 404
 
 if __name__ == '__main__':
     app.run(debug=True)#,host='0.0.0.0')

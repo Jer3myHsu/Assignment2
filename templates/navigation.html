@@ -2,30 +2,30 @@
 <!--Modified from https://www.w3schools.com/howto/howto_js_dropdown.asp-->
 <div class="leftDropdown">
     <button onclick="openNavMenu()" id="navButton">
-        <img class="account" src="static/images/menu.svg"/>
+        <img class="account" src="../static/images/menu.svg"/>
     </button>
     <ul id="navMenu" class="navDropList">
-        <li><a href="/">Home</a></li>
-        <li><a href="team">Course Team</a></li>
-        <li><a href="calendar">Calendar</a></li>
-        <li><a href="lectures">Lectures</a></li>
-        <li><a href="labs">Labs</a></li>
-        <li><a href="assignment">Assignments</a></li>
+        <li><a href="../">Home</a></li>
+        <li><a href="../team">Course Team</a></li>
+        <li><a href="../calendar">Calendar</a></li>
+        <li><a href="../lectures">Lectures</a></li>
+        <li><a href="../labs">Labs</a></li>
+        <li><a href="../assignment">Assignments</a></li>
         <li><a target="_blank" rel="noopener noreferrer" href="https://piazza.com/mail.utoronto.ca/">Piazza</a></li>
         <li><a target="_blank" rel="noopener noreferrer" href="https://markus.utsc.utoronto.ca/cscb20w20">Markus</a></li>
-        <li><a href="resources">Resources</a></li>
+        <li><a href="../resources">Resources</a></li>
     </ul>
 </div>
 <div class="rightDropdown">
     <button onclick="openAccountMenu()" id="userButton">
-        <img class="account" src="static/images/account.svg"/>
+        <img class="account" src="../static/images/account.svg"/>
         {% for item in name %}
             {{ item['name'] }}
         {% endfor %}
     </button>
     <ul id="accountMenu" class="accDropList">
         {% for item in list %}
-        <li><a href="{{ item['link'] }}">{{ item['text'] }}</a></li>
+        <li><a href="../{{ item['link'] }}">{{ item['text'] }}</a></li>
         {% endfor %}
     </ul>
 </div>
