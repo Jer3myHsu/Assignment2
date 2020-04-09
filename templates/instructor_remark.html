@@ -15,7 +15,7 @@
 <div id="navigation"></div>
 <div class="content">
     <h1>Remark Requests</h1>
-    <div class="table">
+    <div class="table mobileTable">
         <div class="heading">
             <div class="cell">Name</div>
             <div class="cell">Assignment</div>
@@ -28,32 +28,11 @@
             <div class="cell">{{ item['reason'] }}</div>
         </div>
         {% endfor %}
+    </div>
         <form method="POST">
         <div class="text">
         <br>Search a Name<br>
         <input type="text" placeholder="Name" name="name">
-    </div>
-    <button>Submit</button>
-    </form>
-    </div>    
-    <div class="mobileTable">
-        <div class="heading">
-            <div class="cell">Name</div>
-            <div class="cell">Assignment</div>
-            <div class="cell">Reason</div>
-        </div>
-        {% for item in remark %}
-        <div class="row">
-            <div class="cell">{{ item['name'] }}</div>
-            <div class="cell">{{ item['assignment'] }}</div>
-            <div class="cell">{{ item['reason'] }}</div>
-        </div>
-        {% endfor %}
-        <form method="POST">
-        <div class="text">
-        <br>Search a Name<br>   
-        <input type="text" placeholder="Name" name="name">
-    </div>
     <button>Submit</button>
     </form>
     </div>
