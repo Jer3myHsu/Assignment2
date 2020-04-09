@@ -30,6 +30,7 @@ body {
     .table {
         display: table;
         min-width: 1000px;
+    }
 }
 h1 {
     display: flex;
