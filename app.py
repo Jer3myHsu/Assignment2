@@ -237,48 +237,49 @@ def resources_page():
 @app.route('/grades', methods=['GET', 'POST'])
 def grades_page():
     if 'username' in session:
+        db = get_db()
+        db.row_factory = make_dicts
         if session['type'] == 'instructor':
             if request.method == 'POST':
-                #name = request.form['name']
-                addname = request.form['addname']
-                addassignment = request.form['addassignment']
-                addgrade = request.form['addgrade']
-                db = get_db()
-                db.row_factory = make_dicts
-                grades = []
-                for grade in query_db('select * from Grades G, Student S where G.username == S.username'):
-                    grades.append(grade)
-                checkname = query_db("select username from Student where name == '{}'".format(addname), one=True)
-                if not checkname:
-                    flash("No Student with Name {}".format(addname))
-                    return redirect('/grades')
-                else:
-                    username = query_db("select username from Student where name == '{}'".format(addname), one=True)['username']
-                check = query_db("select * from Grades where username == '{}' and assignment == '{}'".format(username, addassignment), one=True)
-                if check:
-                    query_db("update Grades set grade = '{}' where username == '{}' and assignment == '{}' ".format(addgrade, username, addassignment))
-                    db.commit()   
-                else:
-                    query_db("insert into Grades(username, assignment, grade)\
-                        values ('{}','{}','{}') ".format(username, addassignment, addgrade))
+                button = request.form['button']
+                if button == 'Add':
+                    username = request.form['name']
+                    assignment = request.form['assignment']
+                    grade = request.form['grade']
+                    if grade == '':
+                        grade = 0
+                    check = query_db("select * from Grades where username == '{}'\
+                        and assignment == '{}'".format(username, assignment), one=True)
+                    if check:
+                        query_db("update Grades set grade = '{}' where username == '{}'\
+                            and assignment == '{}'".format(grade, username, assignment))
+                    else:
+                        query_db("insert into Grades(username, assignment, grade)\
+                            values ('{}','{}','{}') ".format(username, assignment, grade))
                     db.commit()
-                grades = []
-                for grade in query_db('select * from Grades G, Student S where G.username == S.username'):
-                    grades.append(grade)
+                elif button == 'Update':
+                    old_grades = query_db("select * from Grades")
+                    for grade in old_grades:
+                        new_grade = request.form[str(grade['id'])]
+                        # grade['id'] = grade id
+                        # grade['grade'] = current grade
+                        if new_grade == '':
+                            new_grade = 0
+                        if new_grade != grade['grade']:
+                            query_db("update Grades set grade = '{}' where id == '{}'".format(new_grade, grade['id']))
+                            db.commit()
                 db.close()
-                return render_template('instructor_grades.html', grade=grades)
+                return redirect('grades')
             else:
-                db = get_db()
-                db.row_factory = make_dicts
                 grades = []
+                students = []
                 for grade in query_db('select * from Grades G, Student S where G.username == S.username'):
                     grades.append(grade)
+                for student in query_db('select * from Student'):
+                    students.append(student)
                 db.close()
-                return render_template('instructor_grades.html', grade=grades)
-                
+                return render_template('instructor_grades.html', grade=grades, student=students)
         else:
-            db = get_db()
-            db.row_factory = make_dicts
             grades = []
             for grade in query_db('''select * from  Grades G, Student S where G.username == S.username
                 and G.username == '{}' '''.format(session['username'])):

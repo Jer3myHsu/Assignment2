@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="static/css/table.css"/>
+    <link rel="stylesheet" href="static/css/instructor_grades.css"/>
     <link rel="icon" href="static/images/favicon.png">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="static/js/navigation.js"></script>
@@ -16,67 +16,63 @@
 <div id="navigation"></div>
 <div class="content">
     <h1>Grades</h1>
-    <div class="table">
+    {% for message in get_flashed_messages() %}
+        <h3 class="flashMessage">{{ message }}</h3>
+    {% endfor %}
+    <form method="POST">
+        <div class="table mobileTable">
         <div class="heading">
-            <div class="cell">Student Name</div>
-            <div class="cell">Assignment</div>
-            <div class="cell">Grade</div>
+            <div class="cell">Add Grade</div>
+            <div class="cell"></div>
         </div>
-        {% for item in grade %}
         <div class="row">
-            <div class="cell">{{ item['name'] }}</div>
-            <div class="cell">{{ item['assignment'] }}</div>
-            <div class="cell">{{ item['grade'] }}</div>
+            <div class="cell">Name</div>
+            <div class="cell">
+                <select name="name">
+                    {% for item in student %}
+                    <option value="{{ item['username'] }}">{{ item['name'] }}</option>
+                    {% endfor %}
+                </select>
+            </div>
         </div>
-        {% endfor %}
+        <div class="row">
+            <div class="cell">Assignment</div>
+            <div class="cell">
+                <select name="assignment">
+                    <option value="Assignment 1">Assignment 1</option>
+                    <option value="Assignment 2">Assignment 2</option>
+                    <option value="Assignment 3">Assignment 3</option>
+                    <option value="Midterm">Midterm</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="cell">Grade (%)</div>
+            <div class="cell"><input class="addTable" type="number"
+                placeholder="0" name="grade" min="0" max="100"></div>
+        </div>
+    </div>
+    <input class="button" type="submit" name="button" value="Add">
 
-    <button class="open-button" onclick="openForm()">Add/Update Grade</button>
-    <div class="form-popup" id="myForm">
-    <form method="POST" class="form-container">
-        <h1>Add/Update Grade</h1>
-        <label for="Student Name"><b>Name</b></label>
-        <input type="text" placeholder="Enter Name" name="addname" required>
-        <label for="Assignment"><b>Assignment</b></label>
-        <input type="text" placeholder="Enter Assignment" name="addassignment" required>
-        <label for="Grade"><b>Grade</b></label>
-        <input type="text" placeholder="Enter Grade" name="addgrade" required>
-        <button type="submit" class="btn">Submit</button>
-        <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
-    </form>
-    </div>
-    {% for message in get_flashed_messages() %}
-        <h3 class="flashMessage">{{ message }}</h3>
-    {% endfor %}
-    <div class="mobileTable">
+    <h2>Grades</h2>
+    <div class="table mobileTable">
         <div class="heading">
             <div class="cell">Student Name</div>
             <div class="cell">Assignment</div>
-            <div class="cell">Grade</div>
+            <div class="cell">Grade (%)</div>
         </div>
         {% for item in grade %}
         <div class="row">
             <div class="cell">{{ item['name'] }}</div>
             <div class="cell">{{ item['assignment'] }}</div>
-            <div class="cell">{{ item['grade'] }}</div>
+            <div class="cell"><input type="number" placeholder="0" name="{{ item['id'] }}"
+                value="{{ item['grade'] }}" min="0" max="100"></div>
         </div>
         {% endfor %}
-    <button class="open-button" onclick="openForm()">Add/Update Grade</button>
-    <div class="form-popup" id="myForm">
-    <form method="POST" class="form-container">
-        <h1>Add/Update Grade</h1>
-        <label for="Student Name"><b>Name</b></label>
-        <input type="text" placeholder="Enter Name" name="addname" required>
-        <label for="Assignment"><b>Assignment</b></label>
-        <input type="text" placeholder="Enter Assignment" name="addassignment" required>
-        <label for="Grade"><b>Grade</b></label>
-        <input type="text" placeholder="Enter Grade" name="addgrade" required>
-        <button type="submit" class="btn">Submit</button>
-        <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
-    </form>
     </div>
-    {% for message in get_flashed_messages() %}
-        <h3 class="flashMessage">{{ message }}</h3>
-    {% endfor %}
+    <input class="button" type="submit" name="button" value="Update">
+    </form>
+    
 </div>
 <footer></footer>
 </body>

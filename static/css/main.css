@@ -63,7 +63,7 @@ a:hover {
 a:active {
     color: darkgray;
 }
-button {
+button, .button {
     transition: background-color 0.3s ease-in-out 0s;
     font-size: 14pt;
     margin: 20px;
@@ -75,10 +75,10 @@ button {
     text-decoration: none;
     color: white;
 }
-button:hover {
+button:hover, .button:hover {
     background-color: gold;
 }
-button:active {
+button:active, .button:active {
     background-color: darkgray;
 }
 .flashMessage {

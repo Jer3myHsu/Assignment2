@@ -1,0 +1,12 @@
+@import url("table.css");
+@import url("navigation.css");
+@import url("footer.css");
+
+select, input {
+    font-size: 14pt;
+    color: #404040;
+}
+select, .addTable {
+    width: 150px;
+}
+    
