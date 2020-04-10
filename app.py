@@ -324,10 +324,16 @@ def remark_page():
         if session['type'] == 'instructor':
             if request.method == 'POST':
                 name = request.form['name']
+                remarkId = request.form['resolve']
                 exist = query_db('''select username from Student where name == '{}' '''.format(name), one=True) 
                 remarks = []
+                if remarkId:
+                    query_db('''delete from Remark where id == '{}' '''.format(remarkId))
+                    db.commit()
+                    db.close()
+                    return redirect('remark')
                 if name.strip() == '':
-                    for remark in query_db('select reason, name, assignment from\
+                    for remark in query_db('select id, reason, name, assignment from\
                         (select * from Remark R, Grades G where R.grade_id == G.id) A, Student S\
                         where A.username == S.username'):
                         remarks.append(remark)
@@ -337,7 +343,7 @@ def remark_page():
                     flash("Student with the name {} does not exist".format(name))
                     return redirect('remark')
                 else:    
-                    for remark in query_db('''select reason, name, assignment from\
+                    for remark in query_db('''select id, reason, name, assignment from\
                         (select * from Remark R, Grades G where R.grade_id == G.id) A, Student S\
                         where A.username == S.username and lower(S.name) == '{}' '''.format(name.lower())):
                         remarks.append(remark)
@@ -348,7 +354,7 @@ def remark_page():
                     return render_template('instructor_remark.html', remark=remarks)
             else:
                 remarks = []
-                for remark in query_db('select reason, name, assignment from\
+                for remark in query_db('select id, reason, name, assignment from\
                         (select * from Remark R, Grades G where R.grade_id == G.id) A, Student S\
                         where A.username == S.username'):
                     remarks.append(remark)
