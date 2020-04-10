@@ -138,9 +138,6 @@ def login_page():
         db.close()
         session['username'] = username
         session['type'] = 'instructor' if checkbox == 'on' else 'student'
-        if 'next' in session:
-            next = session['next']
-            return redirect(next)
         return redirect('/')
     elif 'username' in session:
         return redirect('/')
