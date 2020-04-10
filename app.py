@@ -264,6 +264,10 @@ def grades_page():
                     if name.strip() == '':
                         db.close()
                         return redirect('grades')
+                    elif not username:
+                        db.close()
+                        flash("Student with the name {} does not exist".format(name))
+                        return redirect('grades')
                     else:    
                         for grade in query_db('''select * from Grades G, Student S where\
                             G.username == S.username and G.username == '{}' '''.format(username['username'])):
@@ -271,6 +275,9 @@ def grades_page():
                         for student in query_db('select * from Student'):
                             students.append(student)
                         db.close()
+                        if not grades:
+                            flash("No Grades have been entered for {}".format(name))
+                            return redirect('grades')
                         return render_template('instructor_grades.html', grade=grades, student=students)
 
                 db.close()
@@ -317,6 +324,7 @@ def remark_page():
         if session['type'] == 'instructor':
             if request.method == 'POST':
                 name = request.form['name']
+                exist = query_db('''select username from Student where name == '{}' '''.format(name), one=True) 
                 remarks = []
                 if name.strip() == '':
                     for remark in query_db('select reason, name, assignment from\
@@ -325,12 +333,18 @@ def remark_page():
                         remarks.append(remark)
                     db.close()
                     return render_template('instructor_remark.html', remark=remarks)
+                elif not exist:
+                    flash("Student with the name {} does not exist".format(name))
+                    return redirect('remark')
                 else:    
                     for remark in query_db('''select reason, name, assignment from\
                         (select * from Remark R, Grades G where R.grade_id == G.id) A, Student S\
                         where A.username == S.username and lower(S.name) == '{}' '''.format(name.lower())):
                         remarks.append(remark)
                     db.close()
+                    if not remarks:
+                            flash("{} does not have any Remark Requests".format(name))
+                            return redirect('remark')
                     return render_template('instructor_remark.html', remark=remarks)
             else:
                 remarks = []
