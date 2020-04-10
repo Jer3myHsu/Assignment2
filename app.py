@@ -256,6 +256,23 @@ def grades_page():
                             query_db("update Grades set grade = '{}' where id == '{}'".format(new_grade, grade['id']))
                             db.commit()
                     flash('Updated Successfully!')
+                elif button == 'Search':
+                    name = request.form['searchName']
+                    username = query_db('''select username from Student where name == '{}' '''.format(name), one=True) 
+                    grades = []
+                    students = []
+                    if name.strip() == '':
+                        db.close()
+                        return redirect('grades')
+                    else:    
+                        for grade in query_db('''select * from Grades G, Student S where\
+                            G.username == S.username and G.username == '{}' '''.format(username['username'])):
+                            grades.append(grade)
+                        for student in query_db('select * from Student'):
+                            students.append(student)
+                        db.close()
+                        return render_template('instructor_grades.html', grade=grades, student=students)
+
                 db.close()
                 return redirect('grades')
             else:
