@@ -258,7 +258,7 @@ def grades_page():
                     flash('Updated Successfully!')
                 elif button == 'Search':
                     name = request.form['searchName']
-                    username = query_db('''select username from Student where name == '{}' '''.format(name), one=True) 
+                    username = query_db('''select username from Student where lower(name) == '{}' '''.format(name.lower()), one=True) 
                     grades = []
                     students = []
                     if name.strip() == '':
@@ -328,7 +328,7 @@ def remark_page():
                 else:    
                     for remark in query_db('''select reason, name, assignment from\
                         (select * from Remark R, Grades G where R.grade_id == G.id) A, Student S\
-                        where A.username == S.username and S.name == '{}' '''.format(name)):
+                        where A.username == S.username and lower(S.name) == '{}' '''.format(name.lower())):
                         remarks.append(remark)
                     db.close()
                     return render_template('instructor_remark.html', remark=remarks)
