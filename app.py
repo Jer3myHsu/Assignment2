@@ -48,6 +48,12 @@ def get_account_items():
     else:
         return [{'link': 'grades', 'text': 'Your Grades'}, {'link': 'remark', 'text': 'Request Remark'},
             {'link': 'feedback', 'text': 'Feedback'}, {'link': 'logout', 'text': 'Log out'}]
+def get_num(word):
+    new_word = ''
+    for char in word:
+        if char.isdigit():
+            new_word += char
+    return new_word
 
 def check_login(page):
     return render_template(page) if 'username' in session else redirect('/login')
@@ -327,7 +333,7 @@ def remark_page():
                 button = request.form['button']
                 if button != 'Search':
                     # button is id
-                    query_db('''delete from Remark where id == '{}' '''.format(button))
+                    query_db('''delete from Remark where id == '{}' '''.format(get_num(button)))
                     db.commit()
                     db.close()
                     flash('Remark Request resolved!')

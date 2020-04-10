@@ -36,7 +36,8 @@
             <div class="cell">{{ item['name'] }}</div>
             <div class="cell">{{ item['assignment'] }}</div>
             <div class="cell">{{ item['reason'] }}</div>
-            <div class="cell"><input class="button" type="submit" name="button" value="{{ item['id'] }}"></div>
+            <!-- Spaces in value are necessary! -->
+            <div class="cell"><input class="button" type="submit" name="button" value="Resolve    {{ item['id'] }}"></div>
         </div>
         {% endfor %}
     </div>

@@ -15,7 +15,8 @@ input {
 }
 .button {
     margin: 5px;
-    width: 100px;
+    width: 90px;
+    text-overflow: hidden;
 }
 #search {
     margin: 20px 5px;
