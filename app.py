@@ -33,14 +33,6 @@ def close_connection(exception):
     if db is not None:
         db.close()
 
-def get_name():
-    db = get_db()
-    db.row_factory = make_dicts
-    name = query_db("select name from Instructor where username == '{}'\
-        union select name from Student where username == '{}'".format(session['username'] , session['username']), one=True)
-    db.close()
-    return [name]
-
 def get_account_items():
     if session['type'] == 'instructor':
         return [{'link': 'grades', 'text': 'Student Grades'}, {'link': 'remark', 'text': 'Remark Requests'},
@@ -60,7 +52,7 @@ def check_login(page):
 
 @app.route('/navigation')
 def navigation():
-    return render_template('navigation.html', name=get_name(), list=get_account_items()) if 'username' in session else ''
+    return render_template('navigation.html', name=[session['name']], list=get_account_items()) if 'username' in session else ''
 
 @app.route('/footer')
 def footer():
@@ -141,6 +133,8 @@ def login_page():
         if not user:
             flash('\U000026D4 Incorrect password...')
             return redirect('/login')
+        session['name'] = query_db("select name from Instructor where username == '{}'\
+            union select name from Student where username == '{}'".format(username , username), one=True)
         db.close()
         session['username'] = username
         session['type'] = 'instructor' if checkbox == 'on' else 'student'
@@ -153,6 +147,7 @@ def login_page():
 @app.route('/logout')
 def logout():
     session.pop('username', None)
+    session.pop('name', None)
     session.pop('type', None)
     return redirect('/login')
 
