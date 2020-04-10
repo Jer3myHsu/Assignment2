@@ -3,12 +3,6 @@
 @import url("navigation.css");
 @import url("footer.css");
 
-.search {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-}
 label {
     margin: 20px 20px 10px 20px;
 }
@@ -22,5 +16,9 @@ input {
 .button {
     margin: 5px;
     width: 100px;
+}
+#search {
+    margin: 20px 5px;
+    width: unset;
 }
     

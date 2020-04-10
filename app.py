@@ -324,34 +324,37 @@ def remark_page():
         if session['type'] == 'instructor':
             if request.method == 'POST':
                 name = request.form['name']
-                remarkId = request.form['resolve']
-                exist = query_db('''select username from Student where name == '{}' '''.format(name), one=True) 
-                remarks = []
-                if remarkId:
-                    query_db('''delete from Remark where id == '{}' '''.format(remarkId))
+                button = request.form['button']
+                if button != 'Search':
+                    # button is id
+                    query_db('''delete from Remark where id == '{}' '''.format(button))
                     db.commit()
                     db.close()
+                    flash('Remark Request resolved!')
                     return redirect('remark')
-                if name.strip() == '':
-                    for remark in query_db('select id, reason, name, assignment from\
-                        (select * from Remark R, Grades G where R.grade_id == G.id) A, Student S\
-                        where A.username == S.username'):
-                        remarks.append(remark)
-                    db.close()
-                    return render_template('instructor_remark.html', remark=remarks)
-                elif not exist:
-                    flash("Student with the name {} does not exist".format(name))
-                    return redirect('remark')
-                else:    
-                    for remark in query_db('''select id, reason, name, assignment from\
-                        (select * from Remark R, Grades G where R.grade_id == G.id) A, Student S\
-                        where A.username == S.username and lower(S.name) == '{}' '''.format(name.lower())):
-                        remarks.append(remark)
-                    db.close()
-                    if not remarks:
-                            flash("{} does not have any Remark Requests".format(name))
-                            return redirect('remark')
-                    return render_template('instructor_remark.html', remark=remarks)
+                else:
+                    exist = query_db('''select username from Student where name == '{}' '''.format(name), one=True)
+                    remarks = []
+                    if name.strip() == '':
+                        for remark in query_db('select id, reason, name, assignment from\
+                            (select * from Remark R, Grades G where R.grade_id == G.id) A, Student S\
+                            where A.username == S.username'):
+                            remarks.append(remark)
+                        db.close()
+                        return render_template('instructor_remark.html', remark=remarks)
+                    elif not exist:
+                        flash("Student with the name {} does not exist".format(name))
+                        return redirect('remark')
+                    else:    
+                        for remark in query_db('''select id, reason, name, assignment from\
+                            (select * from Remark R, Grades G where R.grade_id == G.id) A, Student S\
+                            where A.username == S.username and lower(S.name) == '{}' '''.format(name.lower())):
+                            remarks.append(remark)
+                        db.close()
+                        if not remarks:
+                                flash("{} does not have any Remark Requests".format(name))
+                                return redirect('remark')
+                        return render_template('instructor_remark.html', remark=remarks)
             else:
                 remarks = []
                 for remark in query_db('select id, reason, name, assignment from\

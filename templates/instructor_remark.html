@@ -15,6 +15,16 @@
 <div id="navigation"></div>
 <div class="content">
     <h1>Remark Requests</h1>
+    <form method="POST">
+    <div class="search">
+        <label>Search a Name:</label>
+        <input type="text" placeholder="Name" name="name">
+        <input id="search" class="button" type="submit" name="button" value="Search">
+    </div>
+    </form>
+    {% for message in get_flashed_messages() %}
+        <h3 class="flashMessage">{{ message }}</h3>
+    {% endfor %}
     <div class="table mobileTable">
         <div class="heading">
             <div class="cell">Name</div>
@@ -27,20 +37,11 @@
             <div class="cell">{{ item['name'] }}</div>
             <div class="cell">{{ item['assignment'] }}</div>
             <div class="cell">{{ item['reason'] }}</div>
-            <div class="cell"><input class="button" type="submit" class="{{ item['id'] }}" value="Resolve"></div>
+            <div class="cell"><input class="button" type="submit" name="button" value="{{ item['id'] }}"></div>
         </div>
         {% endfor %}
     </div>
-    <form method="POST">
-    <div class="search">
-        <label>Search a Name:</label>
-        <input type="text" placeholder="Name" name="name">
-        <button>Search</button>
-    </div>
-    </form>
-    {% for message in get_flashed_messages() %}
-        <h3 class="flashMessage">{{ message }}</h3>
-    {% endfor %}
+    
 </div>
 <footer></footer>
 </body>
