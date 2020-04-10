@@ -21,7 +21,6 @@
         <input type="text" placeholder="Name" name="name">
         <input id="search" class="button" type="submit" name="button" value="Search">
     </div>
-    </form>
     {% for message in get_flashed_messages() %}
         <h3 class="flashMessage">{{ message }}</h3>
     {% endfor %}
@@ -41,7 +40,7 @@
         </div>
         {% endfor %}
     </div>
-    
+    </form>
 </div>
 <footer></footer>
 </body>
